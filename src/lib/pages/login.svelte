@@ -6,8 +6,8 @@
 	let school = "";
 
 	function store(): void {
-		if (school) localStorage.setItem("school", school);
-		if (koppelcode) updateToken(koppelcode.replace(/\s/g, ""));
+		koppelcode = koppelcode.replace(/\s/g, "");
+		if (koppelcode && school) updateToken(koppelcode, school);
 	}
 </script>
 
