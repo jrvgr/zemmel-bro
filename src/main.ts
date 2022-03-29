@@ -6,6 +6,8 @@ import weekYear from "dayjs/plugin/weekYear"; // dependent on weekOfYear plugin
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { navigate } from "svelte-navigator";
+import { writable } from "svelte/store";
+import qs from 'qs';
 dayjs.extend(weekYear);
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
@@ -18,20 +20,31 @@ export default app;
 
 console.log(dayjs().isoWeek());
 
+export const code = writable("");
+
 export let token = "";
 
 export let authenticated = false;
 
-const auth = "Bearer" + token;
-
-const school = "2college";
-
-Cookies.set("token", auth, { Secure: true }, { sameSite: "strict" });
-
 const api = axios.create({
-	baseURL: `https://${school}.zportal.nl/api/v3`,
+	baseURL: `https://${localStorage.getItem("school")}.zportal.nl/api/v3`,
 	timeout: 1000,
-	headers: { Authorization: Cookies.get("token") },
+	headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+});
+
+export function updateToken(code) {
+api.post("/oauth/token", {}, qs.stringify({params: {
+			grant_type: "authorization_code",
+			code
+}})
+).then(data => {
+	Cookies.set("token", data.data.access_token, { expires: dayjs().add(1, "day").toDate() });
+	token = data.data.access_token;
+	api.defaults.headers.Authorization = `Bearer ${token}`;
+	authenticated = true;
+	navigate("/");
+}).catch(err => {
+	console.log(err);
 });
 
 api.interceptors.response.use(
@@ -41,9 +54,7 @@ api.interceptors.response.use(
 	},
 	function (error) {
 		if (error.response.status === 401) {
-			authenticated = false;
 			navigate("/login", { replace: true });
-			console.log("lol");
 		}
 		return Promise.reject(error);
 	}
