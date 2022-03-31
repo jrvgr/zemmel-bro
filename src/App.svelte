@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Router, Link, Route } from "svelte-navigator";
-	import Main from "./lib/pages/main.svelte";
-	import Login from "./lib/pages/login.svelte";
+	import Main from "./lib/pages/Main.svelte";
+	import Login from "./lib/pages/Login.svelte";
 </script>
 
 <Router>

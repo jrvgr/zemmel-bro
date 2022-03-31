@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { GraduationCap, Share2 } from "lucide-svelte";
-	import { updateToken } from "../../main";
-
-	let koppelcode = "";
+	import { updateToken } from "../../lib/api/authentication";
 	let school = "";
+	let koppelcode = "";
+
+	if (localStorage.getItem('school')) {
+		school = localStorage.getItem('school');
+	}
 
 	function store(): void {
 		koppelcode = koppelcode.replace(/\s/g, "");
