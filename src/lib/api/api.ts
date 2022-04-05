@@ -1,4 +1,4 @@
-import { navigate } from "svelte-navigator";
+import { router } from "tinro";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    navigate("/login", { replace: true });
+    router.goto("/login");
     console.log(error.response);
     return Promise.reject(error);
   }

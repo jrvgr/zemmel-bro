@@ -1,38 +1,9 @@
 <script lang="ts">
-	import { Router, Link, Route } from "svelte-navigator";
-	import Main from "./lib/pages/Main.svelte";
-	import Login from "./lib/pages/Login.svelte";
+  import { Route } from "tinro";
+  import Login from "./lib/pages/Login.svelte";
+  import Main from "./lib/pages/Main.svelte";
 </script>
 
-<Router>
-	<Route path="/" component={Main} />
-	<Route path="/login" component={Login} />
-</Router>
-
-<style lang="scss">
-	:global body {
-		--body-background: #fcfffd;
-		--header-background: #f5f5f5;
-		--header-background-darker: #c9c9c9;
-		--button-background: #e9e9e9;
-		--button-foreground: #626262;
-		--popup_item-background: #e2e2e2;
-		--accent-gray: #c2c2c2;
-		--accent-red: #ee4242;
-		--accent-red-darker: #c62828;
-		--accent-blue: #218ce4;
-	}
-
-	:global body.dark {
-		--body-background: #373737;
-		--header-background: #232323;
-		--header-background-darker: #303030;
-		--button-background: #393939;
-		--button-foreground: #fafafa;
-		--popup_item-background: #484848;
-		--accent-gray: #676767;
-		--accent-red: #c62828;
-		--accent-red-darker: #af1b1b;
-		--accent-blue: #1976d2;
-	}
-</style>
+<Route path="/" redirect="/main/calendar"><h1>redirecting</h1></Route>
+<Route path="/main/*"><Main /></Route>
+<Route path="/login"><Login /></Route>

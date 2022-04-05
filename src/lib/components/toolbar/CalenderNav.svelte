@@ -1,0 +1,49 @@
+<script lang="ts">
+  import { List, MoveHorizontal, MoveVertical } from "lucide-svelte";
+  import { Route, active } from "tinro";
+</script>
+
+<nav>
+  <div class="pages">
+    <a href="/main/calendar/list" use:active active-class="active"><List /></a>
+    <a href="/main/calendar/horizontal" use:active active-class="active"
+      ><MoveHorizontal /></a
+    >
+    <a href="/main/calendar/vertical" use:active active-class="active"
+      ><MoveVertical /></a
+    >
+  </div>
+  <div class="seperator" />
+  <slot />
+</nav>
+
+<style lang="scss">
+  nav,
+  nav .pages {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    height: m-content;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-background);
+    padding: 0.5rem;
+    width: max-content;
+    height: max-content;
+    border-radius: 0.25em;
+    color: var(--button-foreground);
+  }
+  .seperator {
+    width: 0;
+    height: 2rem;
+    border-right: 0.1rem solid var(--popup_item-background);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+</style>

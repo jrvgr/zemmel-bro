@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
-import { navigate } from "svelte-navigator";
+import { router } from "tinro";
 import dayjs from "dayjs";
-import { api } from "./lib";
+import { api } from "./api";
 
 export function updateToken(code: string, school: string): void {
   localStorage.setItem("school", school);
@@ -21,10 +21,16 @@ export function updateToken(code: string, school: string): void {
         Cookies.set("token", token, {
           expires: dayjs().add(1, "year").toDate(),
         });
-        navigate("/");
+        router.goto("/");
       }
     })
     .catch((err) => {
       console.log(err);
     });
+}
+
+export function logout(): void {
+  Cookies.remove("token");
+  localStorage.removeItem("school");
+  router.goto("/login");
 }
