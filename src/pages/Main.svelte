@@ -2,16 +2,16 @@
   import { Route } from "tinro";
 
   //navigation
-  import Nav from "../components/Nav.svelte";
+  import Nav from "@components/Nav.svelte";
   
   //pages
-  import List from "./subpages/calendar/List.svelte";
-  import Horizontal from "./subpages/calendar/Horizontal.svelte";
-  import Vertical from "./subpages/calendar/Vertical.svelte";
-  import People from "./subpages/People.svelte";
+  import List from "@pages/subpages/calendar/List.svelte";
+  import Horizontal from "@pages/subpages/calendar/Horizontal.svelte";
+  import Vertical from "@pages/subpages/calendar/Vertical.svelte";
+  import People from "@pages/subpages/People.svelte";
 
   //animation
-  import Transition from "../components/Transition.svelte";
+  import Transition from "@components/PageTransition.svelte";
 </script>
 
 <Nav />

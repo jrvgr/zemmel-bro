@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { GraduationCap, Share2 } from "lucide-svelte";
-	import { updateToken } from "../../lib/api/authentication";
+	import { updateToken } from "@api";
 	let school = "";
 	let koppelcode = "";
 

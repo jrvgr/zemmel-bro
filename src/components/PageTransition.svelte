@@ -5,6 +5,13 @@
 
 {#key $router.path}
   <div in:fade={{ duration: 700 }}>
-    <slot />
+    <slot/>
   </div>
 {/key}
+
+<style lang="scss">
+  div{
+    height: 100%;
+    width: 100%;
+  }
+</style>

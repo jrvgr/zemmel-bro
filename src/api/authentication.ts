@@ -25,11 +25,12 @@ export function updateToken(code: string, school: string): void {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 }
 
 export function logout(): void {
+  api.post("/oauth/logout");
   Cookies.remove("token");
   localStorage.removeItem("school");
   router.goto("/login");

@@ -14,9 +14,10 @@ export function getStudents(schoolYear) {
 export function getTeachers(schoolYear) {
   return api.get("/users", {
     params: {
-      isEmployee: true,
+      archived: "false",
+      isEmployee: "true",
       schoolInSchoolYear: schoolYear,
-      fields: "code,firstName,prefix,lastName",
+      fields: "code,prefix,lastName",
     },
   });
 }

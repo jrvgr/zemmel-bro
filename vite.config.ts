@@ -1,8 +1,20 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { typescriptPaths } from "rollup-plugin-typescript-paths";
 
-// https://vitejs.dev/config/
+import alias from "@rollup/plugin-alias";
+// @ts-expect-error
+import path from "path";
+
 export default defineConfig({
-  plugins: [svelte()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@api": path.resolve(__dirname, "./src/api"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+    },
+  },
+  plugins: [svelte(), alias(), typescriptPaths()],
   optimizeDeps: { exclude: ["svelte-navigator"] },
 });

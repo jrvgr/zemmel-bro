@@ -1,6 +1,28 @@
 <script lang="ts">
-  import { List, MoveHorizontal, MoveVertical } from "lucide-svelte";
+  import {
+    Calendar,
+    ChevronLeft,
+    ChevronRight,
+    List,
+    MoveHorizontal,
+    MoveVertical,
+  } from "lucide-svelte";
   import { Route, active } from "tinro";
+  import { week } from "@/stores";
+
+  function increment() {
+    week.update((week) => week + 1);
+  }
+
+  function decrement() {
+    week.update((week) => week - 1);
+  }
+
+  function reset() {
+    week.set(0);
+  };
+
+
 </script>
 
 <nav>
@@ -14,6 +36,17 @@
     >
   </div>
   <div class="seperator" />
+  <button class="normal-button" on:click={decrement}>
+    <ChevronLeft />
+  </button>
+  <button class="normal-button" on:click={reset}>
+    <Calendar />
+  </button>
+  <button class="normal-button" on:click={increment}>
+    <ChevronRight />
+  </button>
+  <div class="seperator" />
+
   <slot />
 </nav>
 
@@ -24,10 +57,11 @@
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
-    height: m-content;
+    height: min-content;
   }
   a {
-    display: flex;
+    display: flex;    gap: 0.5em;
+
     align-items: center;
     justify-content: center;
     background-color: var(--button-background);

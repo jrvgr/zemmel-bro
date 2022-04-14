@@ -3,5 +3,11 @@
 </script>
 
 <CalenderNav>
-  <p>gegroet strijder</p>
+  <p>goede dag</p>
 </CalenderNav>
+
+<style lang="scss">
+  p{
+    margin: 0;
+  }
+</style>

@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const api = axios.create({
   baseURL: `https://${localStorage.getItem("school")}.zportal.nl/api/v3`,
-  timeout: 1000,
+  timeout: 3000,
   headers: { Authorization: `Bearer ${Cookies.get("token")}` },
 });
 
@@ -14,7 +14,7 @@ api.interceptors.response.use(
   },
   (error) => {
     router.goto("/login");
-    console.log(error.response);
+    console.error(error.response);
     return Promise.reject(error);
   }
 );

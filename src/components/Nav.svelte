@@ -2,30 +2,28 @@
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
   import { getStudentName } from "./userName";
-  import { logout } from "../api";
-  import Flex from "svelte-flex";
-  import Transition from "./Transition.svelte";
+  import { logout } from "@api";
+  import Transition from "./NavTransition.svelte";
   import { createPopperActions } from "svelte-popperjs";
-  import { beforeWrite } from "@popperjs/core/lib/enums";
+  import { slide } from "svelte/transition";
+  import { sameWidth } from "./poppersamewidth";
+  import Switch from "svelte-switch";
+  import { Darkmode } from "@/main";
+
+  //import pages
+  import List from "./toolbar/List.svelte";
+  import Horizontal from "./toolbar/Horizontal.svelte";
+  import Vertical from "./toolbar/Vertical.svelte";
+  import People from "./toolbar/People.svelte";
+  import { onMount } from "svelte";
 
   let studentname = "";
 
-  getStudentName("~me").then((name) => {
-    studentname = name;
+  onMount(() => {
+    getStudentName("~me").then((name) => {
+      studentname = name;
+    });
   });
-
-  const sameWidth = {
-    name: "sameWidth",
-    enabled: true,
-    phase: beforeWrite,
-    requires: ["computeStyles"],
-    fn: ({ state }) => {
-      state.styles.popper.width = `${state.rects.reference.width}px`;
-    },
-    effect: ({ state }) => {
-      state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
-    },
-  };
 
   const popperOptions = {
     modifiers: [{ name: "offset", options: { offset: [0, 10] } }, sameWidth],
@@ -38,10 +36,12 @@
     showUserMenu = !showUserMenu;
   }
 
-  import List from "./toolbar/List.svelte";
-  import Horizontal from "./toolbar/Horizontal.svelte";
-  import Vertical from "./toolbar/vertical.svelte";
-  import People from "./toolbar/People.svelte";
+  let checkedValue = false;
+
+  const dark = localStorage.getItem("dark");
+  if (dark === "true") {
+    checkedValue = true;
+  }
 </script>
 
 <nav>
@@ -67,12 +67,28 @@
 </nav>
 
 {#if showUserMenu}
-  <div id="tooltip popper" class="user-menu">
-    <button id="menu-item" use:popperContent on:click={logout}>
-      <Flex justify="between">
-        <p>Log Out</p>
-        <LogOut />
-      </Flex>
+  <div id="tooltip popper" transition:slide use:popperContent class="user-menu">
+    <div
+      id="menu-item"
+      on:click={() => (Darkmode(localStorage), (checkedValue = !checkedValue))}
+    >
+      <p>DarkMode</p>
+      <Switch
+        checked={checkedValue}
+        onColor="#1976d2"
+        handleDiameter={14}
+        width={40}
+        height={20}
+        activeBoxShadow="none"
+        boxShadow="none"
+      >
+        <span slot="checkedIcon" />
+        <span slot="unCheckedIcon" />
+      </Switch>
+    </div>
+    <button id="menu-item" on:click={logout}>
+      <p>Log Out</p>
+      <LogOut />
     </button>
   </div>
 {/if}
@@ -87,6 +103,7 @@
     color: var(--header-background-darker);
     font-size: 1.2rem;
     font-weight: bold;
+    overflow: hidden;
     .left {
       display: flex;
       flex-direction: row;
@@ -111,6 +128,7 @@
         }
       }
       a {
+        transition: 0.2s ease all;
         color: var(--button-foreground);
         text-decoration: none;
         padding: 0.5rem;
@@ -122,6 +140,9 @@
           background-color: var(--button-background);
         }
       }
+    }
+    .toolbar {
+      overflow: hidden;
     }
   }
 
@@ -136,16 +157,31 @@
   }
 
   .user-menu {
-    button {
-      border-radius: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.3rem;
+    background-color: var(--button-background);
+    #menu-item {
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
       border: none;
-      padding: 0 0.2rem;
+      padding: 0.5rem 0.2rem;
       color: var(--button-foreground);
+      background-color: transparent;
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+      &:hover {
+        background-color: var(--popup_item-background);
+      }
     }
   }
 
-   .seperator {
+  .seperator {
     width: 0;
     height: 2rem;
     border-right: 0.1rem solid var(--popup_item-background);
