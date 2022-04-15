@@ -2,7 +2,7 @@
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
   import { getStudentName } from "./userName";
-  import { logout } from "@api";
+  import { logout } from "@/api";
   import Transition from "./NavTransition.svelte";
   import { createPopperActions } from "svelte-popperjs";
   import { slide } from "svelte/transition";

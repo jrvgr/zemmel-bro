@@ -7,8 +7,13 @@
     MoveHorizontal,
     MoveVertical,
   } from "lucide-svelte";
-  import { Route, active } from "tinro";
-  import { week } from "@/stores";
+  import { active } from "tinro";
+  import { currentWeek, week } from "@/stores";
+  import { onMount } from "svelte/internal";
+  import dayjs from "dayjs";
+  import advancedFormat from "dayjs/plugin/advancedFormat";
+  import { onDestroy } from "svelte/internal";
+  dayjs.extend(advancedFormat);
 
   function increment() {
     week.update((week) => week + 1);
@@ -20,19 +25,40 @@
 
   function reset() {
     week.set(0);
-  };
+  }
 
+  let unsubscribe: Function = () => {};
 
+  onMount(() => {
+    unsubscribe = week.subscribe((week) => {
+      currentWeek.set(dayjs().add(week, "w").format("YYYYWW"));
+    });
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
 </script>
 
 <nav>
   <div class="pages">
-    <a href="/main/calendar/list" use:active active-class="active"><List /></a>
-    <a href="/main/calendar/horizontal" use:active active-class="active"
-      ><MoveHorizontal /></a
+    <a
+      class="normal-button"
+      href="/main/calendar/list"
+      use:active
+      active-class="active"><List /></a
     >
-    <a href="/main/calendar/vertical" use:active active-class="active"
-      ><MoveVertical /></a
+    <a
+      class="normal-button"
+      href="/main/calendar/horizontal"
+      use:active
+      active-class="active"><MoveHorizontal /></a
+    >
+    <a
+      class="normal-button"
+      href="/main/calendar/vertical"
+      use:active
+      active-class="active"><MoveVertical /></a
     >
   </div>
   <div class="seperator" />
@@ -59,9 +85,11 @@
     align-items: center;
     height: min-content;
   }
-  a {
-    display: flex;    gap: 0.5em;
-
+  .normal-button {
+    display: flex;
+    gap: 0.5em;
+    border: none;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     background-color: var(--button-background);

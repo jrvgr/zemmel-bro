@@ -1,4 +1,4 @@
-import { getStudentInfo } from "@api";
+import { getStudentInfo } from "@/api";
 
 export async function getStudentName(student: string): Promise<string> {
   const output = await getStudentInfo(student);

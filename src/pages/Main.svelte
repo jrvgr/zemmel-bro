@@ -2,16 +2,21 @@
   import { Route } from "tinro";
 
   //navigation
-  import Nav from "@components/Nav.svelte";
+  import Nav from "@/components/GlobalNav.svelte";
   
   //pages
-  import List from "@pages/subpages/calendar/List.svelte";
-  import Horizontal from "@pages/subpages/calendar/Horizontal.svelte";
-  import Vertical from "@pages/subpages/calendar/Vertical.svelte";
-  import People from "@pages/subpages/People.svelte";
+  import List from "@/pages/subpages/calendar/List.svelte";
+  import Horizontal from "@/pages/subpages/calendar/Horizontal.svelte";
+  import Vertical from "@/pages/subpages/calendar/Vertical.svelte";
+  import People from "@/pages/subpages/People.svelte";
 
   //animation
-  import Transition from "@components/PageTransition.svelte";
+  import Transition from "@/components/PageTransition.svelte";
+  import { getAppointments } from "@/components/GetAppointments";
+  import { appointments, currentWeek, selectedStudent } from "@/stores";
+
+  getAppointments(currentWeek, appointments, selectedStudent)
+
 </script>
 
 <Nav />
