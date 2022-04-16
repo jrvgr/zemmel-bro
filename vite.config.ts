@@ -13,5 +13,5 @@ export default defineConfig({
     },
   },
   plugins: [svelte(), alias(), typescriptPaths()],
-  optimizeDeps: { exclude: ["svelte-navigator"] },
+  optimizeDeps: { exclude: ["tino"] },
 });
