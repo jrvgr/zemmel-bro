@@ -16,3 +16,11 @@ export function studentSchoolYears(student: number | string) {
     },
   });
 }
+
+export function getallsubjects() {
+  return api.get("/subjectselectionsubjects", {
+    params: {
+      fields: "code,name",
+    },
+  });
+}

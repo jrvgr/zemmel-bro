@@ -1,21 +1,14 @@
 <script lang="ts">
   import dayjs from "dayjs";
 
-  import isoWeek from "dayjs/plugin/isoWeek";
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { slide } from "svelte/transition";
-  import {
-    selectedStudent,
-    currentWeek,
-    appointments,
-    selectedDay,
-  } from "@/stores";
+  import { appointments, selectedDay } from "@/stores";
   import Appointment from "@/components/Appointment.svelte";
   import CalendarInfo from "@/components/CalenderInfo.svelte";
   import { checkAppointmentsToday } from "@/components/GetAppointments";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
   import { Smile } from "lucide-svelte";
-  import { onDestroy, onMount, subscribe } from "svelte/internal";
 
   dayjs.extend(advancedFormat);
 </script>

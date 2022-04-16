@@ -5,7 +5,7 @@
   let actionfield = [];
   appointment.actions.forEach((element) => {
     actionfield.push(
-      element.appointment[fieldname].toString().replace(/,/g, ",   ")
+      element.appointment[fieldname].toString().replace(/,/g, " en ")
     );
   });
 </script>

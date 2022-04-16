@@ -20,6 +20,7 @@ export function updateToken(code: string, school: string): void {
         const token = data.data.access_token;
         Cookies.set("token", token, {
           expires: dayjs().add(1, "year").toDate(),
+          SameSite: "None, Secure",
         });
         router.goto("/");
       }

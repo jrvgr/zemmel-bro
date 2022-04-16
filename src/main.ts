@@ -2,7 +2,13 @@ import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { getStudentInfo, getTeachers } from "@/api";
+import {
+  api,
+  getallsubjects,
+  getStudentInfo,
+  getTeachers,
+  studentSchoolYears,
+} from "@/api";
 import "./style.scss";
 import App from "./App.svelte";
 
@@ -32,10 +38,6 @@ function restorescheme() {
 
 restorescheme();
 
-getTeachers("1201").then((data) => console.log(data));
-
-getStudentInfo("~me").then((data) => console.log(data));
-
 // studentSchoolYears("~me").then((data) => {
 //   console.log(data.data.response.data[0]);
 // });
@@ -43,3 +45,19 @@ getStudentInfo("~me").then((data) => console.log(data));
 // getTeachers(year).then((data) => {
 //    console.log(data.data.response.data);
 //  });
+
+studentSchoolYears("~me").then((year) => {
+  api
+    .get("subjectselectionsubjects", {
+      params: {
+        fields: "code,name",
+        schoolInSchoolYear:
+          year.data.response.data[0].schoolInSchoolYears[
+            year.data.response.data[0].schoolInSchoolYears.length - 1
+          ].toString(),
+      },
+    })
+    .then((data1) => {
+      console.log("subjects", data1);
+    });
+});
