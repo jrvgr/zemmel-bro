@@ -18,7 +18,7 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
-        {#if dayjs(appointment.start * 1000).format("dddd") === $selectedDay}
+        {#if dayjs(appointment.start * 1000).format("d") === $selectedDay.format("d")}
           <div class="appointment" in:slide={{ duration: 1000 }}>
             <div class="left">
               <div class="top">

@@ -31,7 +31,7 @@
 
   onMount(() => {
     unsubscribe = week.subscribe((week) => {
-      currentWeek.set(dayjs().add(week, "w").format("YYYYWW"));
+      currentWeek.set(dayjs().add(week, "w"));
     });
   });
 

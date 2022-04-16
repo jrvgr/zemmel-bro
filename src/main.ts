@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { api, studentSchoolYears } from "@/api";
 import "./style.scss";
 import App from "./App.svelte";
 

@@ -1,11 +1,15 @@
 import { onDestroy, onMount } from "svelte/internal";
-import dayjs from "dayjs";
-
+import dayjs, { Dayjs } from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import isoWeek from "dayjs/plugin/isoWeek";
 import { get, Writable } from "svelte/store";
 import { studentSchedule } from "@/api";
 
+dayjs.extend(advancedFormat);
+dayjs.extend(isoWeek);
+
 export function getAppointments(
-  currentWeek: Writable<string>,
+  currentWeek: Writable<Dayjs>,
   appointments: Writable<Array<object>>,
   selectedStudent: Writable<string>
 ): void {
@@ -18,13 +22,13 @@ export function getAppointments(
   onMount(() => {
     unsubscribe1 = currentWeek.subscribe((currentWeek) => {
       week = currentWeek;
-      studentSchedule(student, week).then((data) => {
+      studentSchedule(student, week.format("YYYYWW")).then((data) => {
         appointments.set(data.data.response.data[0].appointments);
       });
     });
     unsubscribe2 = selectedStudent.subscribe((selectedStudent) => {
       student = selectedStudent;
-      studentSchedule(student, week).then((data) => {
+      studentSchedule(student, week.format("YYYYWW")).then((data) => {
         appointments.set(data.data.response.data[0].appointments);
       });
     });
@@ -38,9 +42,10 @@ export function getAppointments(
 
 export function checkAppointmentsToday(
   appointments: Array<Record<string, unknown> & { start: number }>,
-  selectedDay: string
+  selectedDay: Dayjs
 ): boolean {
   return appointments.some(
-    (element) => dayjs(element.start * 1000).format("dddd") === selectedDay
+    (element) =>
+      dayjs(element.start * 1000).format("d") === selectedDay.format("d")
   );
 }

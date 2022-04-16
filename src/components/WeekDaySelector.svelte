@@ -1,13 +1,14 @@
 <script lang="ts">
   import { selectedDay } from "@/stores";
+  import dayjs from "dayjs";
   import { onDestroy, onMount } from "svelte/internal";
 
-  let day = "monday" as string;
+  let day = dayjs().day(1);
   let unsubscribe: Function = () => {};
 
   onMount(() => {
     unsubscribe = selectedDay.subscribe((sday) => {
-      day = sday as string;
+      day = sday;
     });
   });
 
@@ -18,33 +19,33 @@
 
 <div class="weekdays">
   <button
-    class:activeDay={$selectedDay === "Monday"}
+    class:activeDay={$selectedDay.format("d") === "1"}
     class="normal-button monday"
-    on:click={() => selectedDay.set("Monday")}
+    on:click={() => selectedDay.set(dayjs().day(1))}
   >
     <span>M</span>
   </button><button
-    class:activeDay={$selectedDay === "Tuesday"}
+    class:activeDay={$selectedDay.format("d") === "2"}
     class="normal-button tuesday"
-    on:click={() => selectedDay.set("Tuesday")}
+    on:click={() => selectedDay.set(dayjs().day(2))}
   >
     <span>T</span>
   </button><button
-    class:activeDay={$selectedDay === "Wednesday"}
+    class:activeDay={$selectedDay.format("d") === "3"}
     class="normal-button wednesday"
-    on:click={() => selectedDay.set("Wednesday")}
+    on:click={() => selectedDay.set(dayjs().day(3))}
   >
     <span>W</span>
   </button><button
-    class:activeDay={$selectedDay === "Thursday"}
+    class:activeDay={$selectedDay.format("d") === "4"}
     class="normal-button thursday"
-    on:click={() => selectedDay.set("Thursday")}
+    on:click={() => selectedDay.set(dayjs().day(4))}
   >
     <span>T</span>
   </button><button
-    class:activeDay={$selectedDay === "Friday"}
+    class:activeDay={$selectedDay.format("d") === "5"}
     class="normal-button friday"
-    on:click={() => selectedDay.set("Friday")}
+    on:click={() => selectedDay.set(dayjs().day(5))}
   >
     <span>F</span>
   </button>
@@ -71,6 +72,6 @@
   }
   .activeDay {
     background-color: var(--accent-red);
-    color: #fff
+    color: #fff;
   }
 </style>
