@@ -15,12 +15,11 @@ export function updateToken(code: string, school: string): void {
         code,
       },
     })
-    .then((data) => {
+    .then((data): void => {
       if (data.request.status === 200) {
-        const token = data.data.access_token;
-        Cookies.set("token", token, {
+        Cookies.set("token", data.data.access_token, {
           expires: dayjs().add(1, "year").toDate(),
-          SameSite: "None, Secure",
+          SameSite: "None; Secure",
         });
         router.goto("/");
       }
@@ -31,8 +30,14 @@ export function updateToken(code: string, school: string): void {
 }
 
 export function logout(): void {
-  api.post("/oauth/logout");
-  Cookies.remove("token");
-  localStorage.removeItem("school");
-  router.goto("/login");
+  api
+    .post("/oauth/logout")
+    .then(() => {
+      router.goto("/login");
+      Cookies.remove("token");
+      localStorage.removeItem("school");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

@@ -21,12 +21,14 @@ export function getAppointments(
 
   onMount(() => {
     unsubscribe1 = currentWeek.subscribe((currentWeek) => {
+      appointments.set([{}]);
       week = currentWeek;
       studentSchedule(student, week.format("YYYYWW")).then((data) => {
         appointments.set(data.data.response.data[0].appointments);
       });
     });
     unsubscribe2 = selectedStudent.subscribe((selectedStudent) => {
+      appointments.set([{}]);
       student = selectedStudent;
       studentSchedule(student, week.format("YYYYWW")).then((data) => {
         appointments.set(data.data.response.data[0].appointments);
