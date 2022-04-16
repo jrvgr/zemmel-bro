@@ -19,7 +19,8 @@ export function updateToken(code: string, school: string): void {
       if (data.request.status === 200) {
         Cookies.set("token", data.data.access_token, {
           expires: dayjs().add(1, "year").toDate(),
-          SameSite: "None; Secure",
+          SameSite: "Strict",
+          Secure: true,
         });
         router.goto("/");
       }
