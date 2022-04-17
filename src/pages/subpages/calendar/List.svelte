@@ -120,6 +120,7 @@
           border-radius: 5px;
           background-color: var(--accent-green);
           color: #fff;
+          flex-direction: row-reverse;
         }
       }
     }
