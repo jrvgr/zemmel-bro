@@ -2,23 +2,23 @@
   export let appointment;
   export let fieldname = "";
   const normalfield = appointment[fieldname];
-  let actionfield = [];
-  appointment.actions.forEach((element) => {
-    actionfield.push(
-      element.appointment[fieldname].toString().replace(/,/g, " en ")
-    );
-  });
+  // let actionfield = [];
+  // appointment.actions.forEach((element) => {
+  //   actionfield.push(
+  //     element.appointment[fieldname].toString().replace(/,/g, " en ")
+  //   );
+  // });
 </script>
 
-{#if appointment.actions.length > 0}
+<!-- {#if appointment.actions.length > 0}
   {#if actionfield.length > 0}
     <div class={fieldname}>
       {#each actionfield as output}
         <p>{output}</p>
       {/each}
     </div>
-  {/if}
-{:else if normalfield.length > 0}
+  {/if} -->
+{#if normalfield}
   <div class={fieldname}>
     {#each normalfield as output}
       <p>{output}</p>

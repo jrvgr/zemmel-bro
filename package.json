@@ -41,6 +41,7 @@
       "lucide-svelte": "^0.17.15",
       "svelte-popperjs": "^1.2.8",
       "svelte-switch": "^0.0.5",
+      "svelte-typeahead": "^4.2.2",
       "tinro": "^0.6.12"
    }
 }

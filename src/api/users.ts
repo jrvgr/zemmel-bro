@@ -3,10 +3,10 @@ import { api } from "./api";
 export function getStudents(schoolYear) {
   return api.get("/users", {
     params: {
+      archived: false,
       isStudent: true,
       schoolInSchoolYear: schoolYear,
-      fields:
-        "code,firstName,prefix,lastName,email,username, schoolInSchoolYears",
+      fields: "archived,code,firstName,prefix,lastName",
     },
   });
 }

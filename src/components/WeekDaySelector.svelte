@@ -15,9 +15,17 @@
   onDestroy(() => {
     unsubscribe();
   });
+
+  let days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+  ];
 </script>
 
-<div class="weekdays">
+<!-- <div class="weekdays">
   <button
     class:activeDay={$selectedDay.format("d") === "1"}
     class="normal-button monday"
@@ -49,6 +57,18 @@
   >
     <span>F</span>
   </button>
+</div> -->
+
+<div class="weekdays">
+  {#each days as day}
+    <button
+      class:activeDay={$selectedDay.format("dddd") === day}
+      class="normal-button"
+      on:click={() => selectedDay.set(dayjs().day(days.indexOf(day) ))}
+    >
+      <span>{day.substring(0, 1)}</span>
+    </button>
+  {/each}
 </div>
 
 <style lang="scss">
