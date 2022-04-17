@@ -113,6 +113,7 @@
         align-items: center;
         gap: 1rem;
         font-size: 0.875em;
+        justify-content: flex-end;
         .hour {
           display: flex;
           gap: 0.5em;
@@ -120,7 +121,6 @@
           border-radius: 5px;
           background-color: var(--accent-green);
           color: #fff;
-          flex-direction: row-reverse;
         }
       }
     }
