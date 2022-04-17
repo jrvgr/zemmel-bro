@@ -4,8 +4,8 @@
   font-style: normal;
   font-weight: 400;
   src: local(""),
-    url("../../fonts/roboto-v29-latin-regular.woff2") format("woff2"),
-    url("../../fonts/roboto-v29-latin-regular.woff") format("woff");
+    url("@/../fonts/roboto-v29-latin-regular.woff2") format("woff2"),
+    url("@/../fonts/roboto-v29-latin-regular.woff") format("woff");
 }
 
 :root {
@@ -16,10 +16,9 @@
   transition: color 0.6s ease;
   transition: background 0.6s ease;
   transition: background-color 0.6s ease;
-
 }
 
-#app{
+#app {
   height: 100%;
 }
 
@@ -27,7 +26,6 @@ body {
   min-height: 100vh;
   padding: 0;
 }
-
 
 body {
   --body-background: #fcfffd;
@@ -40,7 +38,7 @@ body {
   --accent-red: #ee4242;
   --accent-red-darker: #c62828;
   --accent-blue: #218ce4;
-  --accent-green: #1CC296;
+  --accent-green: #1cc296;
 
   background-color: var(--body-background);
 }
@@ -65,12 +63,12 @@ body.dark {
   transform: rotate(360deg);
 }
 
-.normal-button:hover svg{
+.normal-button:hover svg {
   color: var(--accent-blue);
   transition: 0.4s all ease;
 }
 
-main{
+main {
   background-color: var(--body-background);
   height: 100%;
 }

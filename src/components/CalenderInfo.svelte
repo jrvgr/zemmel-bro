@@ -45,29 +45,17 @@
   main * {
     display: flex;
     justify-content: center;
-    width: 100vw;
   }
   .selected-schedule,
   .week-info {
     flex-grow: 1;
     flex-basis: 0;
-    min-width: 100%;
     @media screen and (min-width: 768px) {
-      min-width: max-content;
       flex-direction: row-reverse;
     }
   }
   .selected-schedule {
     display: flex;
     text-align: end;
-  }
-
-  .weekdays {
-    min-width: 100%;
-    @media screen and (min-width: 768px) {
-      min-width: 100%;
-      flex-grow: 1;
-      flex-basis: 0;
-    }
   }
 </style>
