@@ -17,15 +17,6 @@
   # Default build command.
   command = "yarn dev"
 
-[[plugins]]
-  # Installs the Lighthouse Build Plugin for all deploy contexts
-  package = "@netlify/plugin-lighthouse"
-
-# Production context: all deploys from the Production branch 
-# set in your site’s Branches settings in the UI will inherit 
-# these settings. You can define environment variables 
-# here but we recommend using the Netlify UI for sensitive
-# values to keep them out of your source repository. 
 [context.production]
   publish = "dist/"
   command = "yarn build"
