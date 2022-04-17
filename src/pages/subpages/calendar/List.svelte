@@ -76,7 +76,6 @@
     margin: 0 0.625em;
     padding: 0.625em;
     flex-wrap: wrap-reverse;
-    flex: 1;
     p {
       margin: 0;
     }
@@ -85,7 +84,6 @@
       flex-direction: column;
       gap: 0.5em;
       justify-content: center;
-      height: min-content;
       flex: 1 1 50%;
 
       .top {
@@ -106,7 +104,6 @@
       flex-direction: column;
       justify-content: space-between;
       min-width: max-content;
-      min-height: 100%;
       flex: 0 1 auto;
       .top {
         font-size: larger;
