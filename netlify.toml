@@ -28,7 +28,7 @@
 # values to keep them out of your source repository. 
 [context.production]
   publish = "dist/"
-  command = "yarn vuild"
+  command = "yarn build"
 
 # Deploy Preview context: all deploys generated from
 # a pull/merge request will inherit these settings.
