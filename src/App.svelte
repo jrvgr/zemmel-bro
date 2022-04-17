@@ -7,3 +7,4 @@
 <Route path="/" redirect="/main/calendar"><h1>redirecting</h1></Route>
 <Route path="/main/*"><Main /></Route>
 <Route path="/login"><Login /></Route>
+<Route fallback redirect="/">No page found</Route>

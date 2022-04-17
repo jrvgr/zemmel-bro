@@ -75,6 +75,8 @@
     color: var(--button-foreground);
     margin: 0 0.625em;
     padding: 0.625em;
+    flex-wrap: wrap-reverse;
+    flex: 1;
     p {
       margin: 0;
     }
@@ -84,28 +86,33 @@
       gap: 0.5em;
       justify-content: center;
       height: min-content;
+      flex: 1 1 50%;
+
       .top {
         font-size: larger;
       }
       .bottom {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        flex: 1;
+        gap: 0.5rem;
         font-size: 14px;
+        width: inherit;
+        flex-wrap: wrap;
       }
     }
     .right {
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
-      justify-content: center;
-      height: min-content;
+      justify-content: space-between;
+      min-width: max-content;
+      min-height: 100%;
+      flex: 0 1 auto;
       .top {
         font-size: larger;
       }
       .bottom {
         display: flex;
-        flex-direction: row-reverse;
         align-items: center;
         gap: 1rem;
         font-size: 0.875em;

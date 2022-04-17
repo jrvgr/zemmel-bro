@@ -40,14 +40,34 @@
     padding: 1rem;
     flex: 1;
     color: var(--button-foreground);
+    flex-wrap: wrap-reverse;
+  }
+  main * {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
   }
   .selected-schedule,
   .week-info {
     flex-grow: 1;
     flex-basis: 0;
+    min-width: 100%;
+    @media screen and (min-width: 768px) {
+      min-width: max-content;
+      flex-direction: row-reverse;
+    }
   }
   .selected-schedule {
     display: flex;
-    flex-direction: row-reverse;
+    text-align: end;
+  }
+
+  .weekdays {
+    min-width: 100%;
+    @media screen and (min-width: 768px) {
+      min-width: 100%;
+      flex-grow: 1;
+      flex-basis: 0;
+    }
   }
 </style>
