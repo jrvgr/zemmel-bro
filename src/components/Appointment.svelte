@@ -36,6 +36,7 @@
     padding: 0.3em;
     border-radius: 5px;
     background-color: var(--accent-blue);
+    flex-wrap: wrap;
     p {
       color: #fff;
     }
@@ -49,6 +50,7 @@
     padding: 0.3em;
     border-radius: 5px;
     background-color: var(--accent-red);
+    flex-wrap: wrap;
     p {
       color: #fff;
     }
@@ -59,8 +61,8 @@
   .subjects {
     display: flex;
     gap: 0.5em;
-
-    p{
+    flex-wrap: wrap;
+    p {
       white-space: pre-wrap;
     }
 

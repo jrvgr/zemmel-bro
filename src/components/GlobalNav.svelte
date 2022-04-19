@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
-  import { getStudentName } from "./userName";
-  import { logout } from "@/api";
+  import { getStudentName } from "./users";
+  import { getStudentInfo, logout } from "@/api";
   import Transition from "./NavTransition.svelte";
   import { createPopperActions } from "svelte-popperjs";
   import { slide } from "svelte/transition";
@@ -16,13 +16,12 @@
   import Vertical from "./toolbar/Vertical.svelte";
   import People from "./toolbar/People.svelte";
   import { onMount } from "svelte";
+  import { selectedStudent } from "@/stores";
 
   let studentname = "";
 
-  onMount(() => {
-    getStudentName("~me").then((name) => {
-      studentname = name;
-    });
+  getStudentInfo("~me").then((student) => {
+    studentname = getStudentName(student.data.response.data[0]);
   });
 
   const popperOptions = {
@@ -57,12 +56,12 @@
     <a href="/main/people" use:active active-class="active"><Users /></a>
   </div>
   <div class="toolbar">
-    <Transition>
-      <Route path="/calendar/list"><List /></Route>
-      <Route path="/calendar/vertical"><Vertical /></Route>
-      <Route path="/calendar/horizontal"><Horizontal /></Route>
-      <Route path="/people"><People /></Route>
-    </Transition>
+    <!-- <Transition> -->
+    <Route path="/calendar/list"><List /></Route>
+    <Route path="/calendar/vertical"><Vertical /></Route>
+    <Route path="/calendar/horizontal"><Horizontal /></Route>
+    <Route path="/people"><People /></Route>
+    <!-- </Transition> -->
   </div>
 </nav>
 
@@ -103,7 +102,8 @@
     color: var(--header-background-darker);
     font-size: 1.2rem;
     font-weight: bold;
-    overflow: hidden;
+    overflow: visible;
+    overflow-x: hidden;
     .left {
       display: flex;
       flex-direction: row;
@@ -142,7 +142,8 @@
       }
     }
     .toolbar {
-      overflow: hidden;
+      overflow: visible;
+      overflow-x: hidden;
     }
   }
 

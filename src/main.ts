@@ -8,7 +8,6 @@ import "./style.scss";
 import { get } from "svelte/store";
 import App from "./App.svelte";
 import { api, getStudents, studentSchedule, studentSchoolYears } from "@/api";
-import { getStudentName } from "./components/userName";
 import { currentWeek, week } from "./stores";
 
 dayjs.extend(isoWeek);
@@ -66,22 +65,13 @@ console.log(get(currentWeek).weekday(1).format("dddd"));
 //     console.log(data);
 //   });
 
-// studentSchoolYears("~me").then((year) => {
-//   getStudents(year.data.response.data[0].schoolInSchoolYears[0]).then(
-//     (students) => {
-//       console.log(
-//         students.data.response.data.forEach((element) => {
-//           console.log({
-//             firstname: element.firstName,
-//             prefix: element.prefix,
-//             lastname: element.lastName,
-//             code: element.code,
-//           });
-//         })
-//       );
-//     }
-//   );
-// });
+studentSchoolYears("~me").then((year) => {
+  getStudents(year.data.response.data[0].schoolInSchoolYears[0]).then(
+    (students) => {
+      console.log(students.data.response.data);
+    }
+  );
+});
 
 // getStudents("1201").then((students) => {
 //   console.log(students.data.response.data);

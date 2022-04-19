@@ -3,29 +3,13 @@
 
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { slide } from "svelte/transition";
-  import { appointments, selectedDay, selectedStudent } from "@/stores";
+  import { appointments, selectedDay } from "@/stores";
   import Appointment from "@/components/Appointment.svelte";
   import CalendarInfo from "@/components/CalenderInfo.svelte";
   import { checkAppointmentsToday } from "@/components/GetAppointments";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
-  import { studentSchoolYears, getStudents } from "@/api";
-  import Typeahead from "svelte-typeahead";
-  import { Code, SortAsc } from "lucide-svelte";
 
   dayjs.extend(advancedFormat);
-
-  let data = [];
-
-  studentSchoolYears("~me").then((year) => {
-    getStudents(year.data.response.data[0].schoolInSchoolYears[0]).then(
-      (students) => {
-        console.log(students);
-        data = students.data.response.data;
-      }
-    );
-  });
-
-  let events = [];
 </script>
 
 <main>
@@ -33,7 +17,7 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
-        {#if dayjs(appointment.start * 1000).weekday() - 1 === $selectedDay.day()}
+        {#if dayjs(appointment.start * 1000).day() -1 === $selectedDay.day()}
           <div class="appointment" in:slide={{ duration: 1000 }}>
             <div class="left">
               <div class="top">
@@ -72,23 +56,6 @@
       {/key}
     </div>
   {/key}
-
-  {#key data}
-    <Typeahead
-      label="U.S. States"
-      placeholder={`Search U.S. states (e.g. "California")`}
-      {data}
-      extract={(student) => student.firstName + " " + student.lastName}
-      disable={(item) => /Jacco/.test(item)}
-      on:select={({ detail }) => (
-        (events = [...events, detail]),
-        selectedStudent.set(detail.original.code)
-      )}
-      on:clear={() => (events = [...events, "clear"])}
-      let:result
-      let:index
-    />
-  {/key}
 </main>
 
 <style lang="scss">
@@ -120,9 +87,11 @@
       gap: 0.5em;
       justify-content: center;
       flex: 1 1 50%;
-
+      flex-wrap: wrap;
       .top {
         font-size: larger;
+        display: flex;
+        flex-wrap: wrap;
       }
       .bottom {
         display: flex;
@@ -139,7 +108,6 @@
       flex-direction: column;
       justify-content: space-between;
       width: max-content;
-      min-height: 100%;
       gap: 0.5em;
       .top {
         display: flex;
