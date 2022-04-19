@@ -37,13 +37,10 @@
    "dependencies": {
       "axios": "^0.26.1",
       "dayjs": "^1.11.0",
-      "fuzzy": "^0.1.3",
       "js-cookie": "^3.0.1",
       "lucide-svelte": "^0.17.15",
-      "svelte-fuzzy": "^2.1.0",
       "svelte-popperjs": "^1.2.8",
       "svelte-switch": "^0.0.5",
-      "svelte-tiny-virtual-list": "^2.0.3",
       "tinro": "^0.6.12"
    }
 }

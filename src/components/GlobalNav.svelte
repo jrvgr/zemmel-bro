@@ -56,12 +56,12 @@
     <a href="/main/people" use:active active-class="active"><Users /></a>
   </div>
   <div class="toolbar">
-    <!-- <Transition> -->
-    <Route path="/calendar/list"><List /></Route>
-    <Route path="/calendar/vertical"><Vertical /></Route>
-    <Route path="/calendar/horizontal"><Horizontal /></Route>
-    <Route path="/people"><People /></Route>
-    <!-- </Transition> -->
+    <Transition>
+      <Route path="/calendar/list"><List /></Route>
+      <Route path="/calendar/vertical"><Vertical /></Route>
+      <Route path="/calendar/horizontal"><Horizontal /></Route>
+      <Route path="/people"><People /></Route>
+    </Transition>
   </div>
 </nav>
 

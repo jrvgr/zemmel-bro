@@ -5,10 +5,8 @@ import updateLocale from "dayjs/plugin/updateLocale";
 import weekday from "dayjs/plugin/weekday";
 import LocaleData from "dayjs/plugin/localeData";
 import "./style.scss";
-import { get } from "svelte/store";
 import App from "./App.svelte";
-import { api, getStudents, studentSchedule, studentSchoolYears } from "@/api";
-import { currentWeek, week } from "./stores";
+import { userSchedule } from "./api";
 
 dayjs.extend(isoWeek);
 dayjs.extend(advancedFormat);
@@ -52,27 +50,6 @@ function restorescheme() {
 
 restorescheme();
 
-console.log(get(currentWeek).weekday(1).format("dddd"));
-
-// api
-//   .get("/liveschedule", {
-//     params: {
-//       student: "120012804",
-//       week: "202114",
-//     },
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   });
-
-studentSchoolYears("~me").then((year) => {
-  getStudents(year.data.response.data[0].schoolInSchoolYears[0]).then(
-    (students) => {
-      console.log(students.data.response.data);
-    }
-  );
+userSchedule("aat", dayjs()).then((data) => {
+  console.log(data);
 });
-
-// getStudents("1201").then((students) => {
-//   console.log(students.data.response.data);
-// });

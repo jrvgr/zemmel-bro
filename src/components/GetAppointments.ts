@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import isoWeek from "dayjs/plugin/isoWeek";
 import { get, Writable } from "svelte/store";
-import { studentSchedule } from "@/api";
+import { userSchedule } from "@/api";
 
 dayjs.extend(advancedFormat);
 dayjs.extend(isoWeek);
@@ -47,36 +47,24 @@ export function getAppointments(
     unsubscribe1 = currentWeek.subscribe((currentWeek) => {
       appointments.set([{}]);
       week = currentWeek;
-      studentSchedule(student.code, week).then((data) => {
-        // appointments.set(
-        //   data.data.response.data.sort((a, b) => {
-        //     return a.start - b.start;
-        //   })
-        // );
-        // console.log(
-        //   data.data.response.data.sort((a, b) => {
-        //     return a.start - b.start;
-        //   })
-        // );
+      userSchedule(student.code, week).then((data) => {
         const array = merge(
           data.data.response.data.sort((a, b) => {
             return a.start - b.start;
           })
         );
-        console.log(array);
         appointments.set(array);
       });
     });
     unsubscribe2 = selectedStudent.subscribe((selectedStudent) => {
       appointments.set([{}]);
       student = selectedStudent;
-      studentSchedule(student.code, week).then((data) => {
+      userSchedule(student.code, week).then((data) => {
         const array = merge(
           data.data.response.data.sort((a, b) => {
             return a.start - b.start;
           })
         );
-        console.log(array);
         appointments.set(array);
       });
     });
