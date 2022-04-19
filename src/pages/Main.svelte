@@ -14,18 +14,18 @@
   import Transition from "@/components/PageTransition.svelte";
   import { getAppointments } from "@/components/GetAppointments";
   import { appointments, currentWeek, selectedStudent } from "@/stores";
+import { setSelectedStudentDefault } from "@/components/users";
 
   getAppointments(currentWeek, appointments, selectedStudent);
+  setSelectedStudentDefault();
 </script>
 
 <Nav />
 
-<main>
-  <Transition>
-    <Route path="/calendar" redirect="calendar/list" />
-    <Route path="/calendar/list"><List /></Route>
-    <Route path="/calendar/horizontal"><Horizontal /></Route>
-    <Route path="/calendar/vertical"><Vertical /></Route>
-    <Route path="/people"><People /></Route>
-  </Transition>
-</main>
+<Transition>
+  <Route path="/calendar" redirect="calendar/list" />
+  <Route path="/calendar/list"><List /></Route>
+  <Route path="/calendar/horizontal"><Horizontal /></Route>
+  <Route path="/calendar/vertical"><Vertical /></Route>
+  <Route path="/people"><People /></Route>
+</Transition>

@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { getStudentInfo } from "@/api";
+
   import { selectedStudent, week } from "@/stores";
   import dayjs from "dayjs";
+  import { Code } from "lucide-svelte";
   import { onDestroy, onMount } from "svelte/internal";
+  import { getStudentName } from "./users";
 
   let mondaydate;
   let sundaydate;
@@ -17,6 +21,13 @@
   onDestroy(() => {
     unsubscribe();
   });
+
+  let studentName = "";
+  onMount(() => {
+    selectedStudent.subscribe((student) => {
+      studentName = getStudentName(student);
+    });
+  });
 </script>
 
 <main>
@@ -25,7 +36,7 @@
   </div>
   <slot />
   <div class="selected-schedule">
-    <p>schedule: {$selectedStudent}</p>
+    <p>schedule: {studentName}</p>
   </div>
 </main>
 

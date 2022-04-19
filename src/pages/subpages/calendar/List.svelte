@@ -8,7 +8,6 @@
   import CalendarInfo from "@/components/CalenderInfo.svelte";
   import { checkAppointmentsToday } from "@/components/GetAppointments";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
-  import { Smile } from "lucide-svelte";
 
   dayjs.extend(advancedFormat);
 </script>
@@ -18,7 +17,7 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
-        {#if dayjs(appointment.start * 1000).format("d") === $selectedDay.format("d")}
+        {#if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
           <div
             class:cancelled={appointment.cancelled}
             class="appointment"
@@ -26,11 +25,11 @@
           >
             <div class="left">
               <div class="top">
-                <Appointment {appointment} fieldname={"subjects"} />
+                <Appointment {appointment} fieldname="subjects" />
               </div>
               <div class="bottom">
-                <Appointment {appointment} fieldname={"locations"} />
-                <Appointment {appointment} fieldname={"teachers"} />
+                <Appointment {appointment} fieldname="locations" />
+                <Appointment {appointment} fieldname="teachers" />
               </div>
             </div>
             <div class="right">
@@ -77,9 +76,12 @@
     background-color: var(--popup_item-background);
     border-radius: 5px;
     color: var(--button-foreground);
+    height: min-content;
     margin: 0 0.625em;
     padding: 0.625em;
     flex-wrap: wrap-reverse;
+    align-items: flex-end;
+    gap: 10px;
     p {
       margin: 0;
     }
@@ -89,9 +91,11 @@
       gap: 0.5em;
       justify-content: center;
       flex: 1 1 50%;
-
+      flex-wrap: wrap;
       .top {
         font-size: larger;
+        display: flex;
+        flex-wrap: wrap;
       }
       .bottom {
         display: flex;
@@ -107,17 +111,22 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-width: max-content;
-      flex: 0 1 auto;
+      width: max-content;
+      gap: 0.5em;
       .top {
+        display: flex;
         font-size: larger;
+        align-items: center;
+        width: max-content;
       }
       .bottom {
         display: flex;
         align-items: center;
         gap: 1rem;
         font-size: 0.875em;
-        justify-content: flex-end;
+        flex-grow: 1;
+        flex-basis: 0;
+        align-content: space-around;
         .hour {
           display: flex;
           gap: 0.5em;

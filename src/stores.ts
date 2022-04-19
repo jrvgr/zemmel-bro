@@ -11,7 +11,10 @@ dayjs.extend(localeDate);
 dayjs.extend(weekday);
 
 export const week = writable(0);
-export const selectedStudent = writable("~me");
 export const currentWeek = writable<Dayjs>(dayjs());
 export const appointments = writable([]);
+export const selectedDay = writable<Dayjs>(dayjs().day(1));
+export const selectedStudent = writable<
+  Record<string, unknown> & { code: string }
+>({ code: "~me" });
 export const selectedDay = writable<Dayjs>(dayjs());

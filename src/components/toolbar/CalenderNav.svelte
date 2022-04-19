@@ -13,6 +13,7 @@
   import dayjs from "dayjs";
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { onDestroy } from "svelte/internal";
+  import { getStudents, studentSchoolYears } from "@/api";
   dayjs.extend(advancedFormat);
 
   function increment() {
@@ -38,6 +39,7 @@
   onDestroy(() => {
     unsubscribe();
   });
+
 </script>
 
 <nav>
@@ -84,6 +86,7 @@
     gap: 0.5rem;
     align-items: center;
     height: min-content;
+    overflow: visible;
   }
   .normal-button {
     display: flex;

@@ -2,12 +2,31 @@ import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import updateLocale from "dayjs/plugin/updateLocale";
+import weekday from "dayjs/plugin/weekday";
+import LocaleData from "dayjs/plugin/localeData";
 import "./style.scss";
 import App from "./App.svelte";
+import { userSchedule } from "./api";
 
 dayjs.extend(isoWeek);
 dayjs.extend(advancedFormat);
 dayjs.extend(updateLocale);
+dayjs.extend(weekday);
+dayjs.extend(LocaleData);
+
+dayjs.locale("en");
+
+dayjs.updateLocale("en", {
+  weekdays: [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ],
+});
 
 const app = new App({
   target: document.getElementById("app"),
@@ -31,18 +50,6 @@ function restorescheme() {
 
 restorescheme();
 
-// studentSchoolYears("~me").then((year) => {
-//   api
-//     .get("subjectselectionsubjects", {
-//       params: {
-//         fields: "code,name",
-//         schoolInSchoolYear:
-//           year.data.response.data[0].schoolInSchoolYears[
-//             year.data.response.data[0].schoolInSchoolYears.length - 1
-//           ].toString(),
-//       },
-//     })
-//     .then((data1) => {
-//       console.log("subjects", data1);
-//     });
-// });
+userSchedule("aat", dayjs()).then((data) => {
+  console.log(data);
+});
