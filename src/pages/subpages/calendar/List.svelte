@@ -17,8 +17,12 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
-        {#if dayjs(appointment.start * 1000).day() -1 === $selectedDay.day()}
-          <div class="appointment" in:slide={{ duration: 1000 }}>
+        {#if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
+          <div
+            class:cancelled={appointment.cancelled}
+            class="appointment"
+            in:slide={{ duration: 1000 }}
+          >
             <div class="left">
               <div class="top">
                 <Appointment {appointment} fieldname="subjects" />
@@ -133,5 +137,10 @@
         }
       }
     }
+  }
+
+  .cancelled {
+    background-color: #ff7a7a;
+    color: #fff;
   }
 </style>
