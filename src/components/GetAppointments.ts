@@ -11,16 +11,15 @@ dayjs.extend(isoWeek);
 
 function merge(array) {
   for (let i = 1; i < array.length; ) {
-    if (array[i].start !== array[i - 1].start) {
+    if (array[i].start === array[i - 1].start) {
+      array[i].subjects = [array[i].subjects.join(" ")];
+      array[i].teachers.push(...array[i - 1].teachers);
+      array[i].subjects.push(...array[i - 1].subjects);
+      array[i].locations.push(...array[i - 1].locations);
+      array.splice(i - 1, 1);
+    } else {
       i += 1;
-      // eslint-disable-next-line no-continue
-      continue;
     }
-    array[i].subjects = [array[i].subjects.join(" ")];
-    array[i].teachers.push(...array[i - 1].teachers);
-    array[i].subjects.push(...array[i - 1].subjects);
-    array[i].locations.push(...array[i - 1].locations);
-    array.splice(i - 1, 1);
   }
   return array;
 }
