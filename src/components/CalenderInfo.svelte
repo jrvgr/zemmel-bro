@@ -1,42 +1,38 @@
 <script lang="ts">
-  import { getStudentInfo } from "@/api";
-
-  import { selectedStudent, week } from "@/stores";
+  import { currentWeek, selectedDay, selectedUser } from "@/stores";
   import dayjs from "dayjs";
-  import { Code } from "lucide-svelte";
-  import { onDestroy, onMount } from "svelte/internal";
-  import { getStudentName } from "./users";
+  import duration from "dayjs/plugin/duration";
+  import relativeTime from "dayjs/plugin/relativeTime";
+  import { getUserName } from "./users";
 
-  let mondaydate;
-  let sundaydate;
-  let unsubscribe: Function = () => {};
+  dayjs.extend(duration);
+  dayjs.extend(relativeTime);
 
-  onMount(() => {
-    week.subscribe((week) => {
-      mondaydate = dayjs(dayjs().add(week, "w")).day(1).format("MMM DD");
-      sundaydate = dayjs(dayjs().add(week, "w")).day(7).format("MMM DD");
-    });
-  });
-
-  onDestroy(() => {
-    unsubscribe();
-  });
-
-  let studentName = "";
-  onMount(() => {
-    selectedStudent.subscribe((student) => {
-      studentName = getStudentName(student);
-    });
-  });
+  function getWeek() {
+    const diff = dayjs().diff($currentWeek, "w");
+    if (diff === 0) return "This Week";
+    if (diff === 1) return "Last Week";
+    if (diff === -1) return "Next Week";
+    if (diff > 0) return `${diff} weeks ago`;
+    if (diff < 0) return `${Math.abs(diff)} weeks from now`;
+  }
 </script>
 
 <main>
   <div class="week-info">
-    <p class="weekstart">week: {mondaydate} till {sundaydate}</p>
+    {#key $currentWeek}
+      <p class="weekstart">
+        {getWeek()}
+        on
+        {$currentWeek.day($selectedDay.add(1, "d").day()).format("MMM DD")}
+      </p>
+    {/key}
   </div>
   <slot />
   <div class="selected-schedule">
-    <p>schedule: {studentName}</p>
+    {#key $selectedUser}
+      <p>Schedule for: {getUserName($selectedUser)}</p>
+    {/key}
   </div>
 </main>
 

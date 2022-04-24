@@ -6,7 +6,7 @@ import weekday from "dayjs/plugin/weekday";
 import LocaleData from "dayjs/plugin/localeData";
 import "./style.scss";
 import App from "./App.svelte";
-import { userSchedule } from "./api";
+import { studentSchedule } from "./api";
 
 dayjs.extend(isoWeek);
 dayjs.extend(advancedFormat);
@@ -49,7 +49,3 @@ function restorescheme() {
 }
 
 restorescheme();
-
-userSchedule("aat", dayjs()).then((data) => {
-  console.log(data);
-});

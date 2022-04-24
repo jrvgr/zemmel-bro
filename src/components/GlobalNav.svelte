@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
-  import { getStudentName } from "./users";
-  import { getStudentInfo, logout } from "@/api";
+  import { getUserName } from "./users";
+  import { getUserInfo, logout } from "@/api";
   import Transition from "./NavTransition.svelte";
   import { createPopperActions } from "svelte-popperjs";
   import { slide } from "svelte/transition";
@@ -16,12 +16,11 @@
   import Vertical from "./toolbar/Vertical.svelte";
   import People from "./toolbar/People.svelte";
   import { onMount } from "svelte";
-  import { selectedStudent } from "@/stores";
 
   let studentname = "";
 
-  getStudentInfo("~me").then((student) => {
-    studentname = getStudentName(student.data.response.data[0]);
+  getUserInfo("~me").then((student) => {
+    studentname = getUserName(student.data.response.data[0]);
   });
 
   const popperOptions = {
@@ -102,8 +101,6 @@
     color: var(--header-background-darker);
     font-size: 1.2rem;
     font-weight: bold;
-    overflow: visible;
-    overflow-x: hidden;
     .left {
       display: flex;
       flex-direction: row;
@@ -140,10 +137,6 @@
           background-color: var(--button-background);
         }
       }
-    }
-    .toolbar {
-      overflow: visible;
-      overflow-x: hidden;
     }
   }
 

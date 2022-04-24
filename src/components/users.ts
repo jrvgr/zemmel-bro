@@ -1,17 +1,15 @@
-import { getStudentInfo } from "@/api";
-import { selectedStudent } from "@/stores";
+import { getUserInfo } from "@/api";
+import { selectedUser } from "@/stores";
 
-export function getStudentName(student: Record<string, any>): string {
-  const studentInfo = student;
-
-  if (studentInfo.prefix) {
-    return `${studentInfo.firstName} ${studentInfo.prefix} ${studentInfo.lastName}`;
+export function getUserName(user: Record<string, any>): string {
+  if (user.prefix) {
+    return `${user.firstName} ${user.prefix} ${user.lastName}`;
   }
-  return `${studentInfo.firstName} ${studentInfo.lastName}`;
+  return `${user.firstName} ${user.lastName}`;
 }
 
-export async function setSelectedStudentDefault(): Promise<void> {
-  getStudentInfo("~me").then((data) => {
-    selectedStudent.set(data.data.response.data[0]);
+export function setSelectedStudentDefault(): void {
+  getUserInfo("~me").then((data) => {
+    selectedUser.set(data.data.response.data[0]);
   });
 }

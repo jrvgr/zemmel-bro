@@ -22,6 +22,6 @@ export function getTeachers(schoolYear) {
   });
 }
 
-export function getStudentInfo(student: string) {
+export function getUserInfo(student: string) {
   return api.get(`/users/${student}`);
 }

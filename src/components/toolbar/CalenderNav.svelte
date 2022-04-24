@@ -16,15 +16,15 @@
   import { getStudents, studentSchoolYears } from "@/api";
   dayjs.extend(advancedFormat);
 
-  function increment() {
+  const increment = (): void => {
     week.update((week) => week + 1);
   }
 
-  function decrement() {
+  const decrement = (): void => {
     week.update((week) => week - 1);
   }
 
-  function reset() {
+  const reset = (): void => {
     week.set(0);
   }
 
@@ -39,7 +39,6 @@
   onDestroy(() => {
     unsubscribe();
   });
-
 </script>
 
 <nav>
@@ -86,7 +85,6 @@
     gap: 0.5rem;
     align-items: center;
     height: min-content;
-    overflow: visible;
   }
   .normal-button {
     display: flex;

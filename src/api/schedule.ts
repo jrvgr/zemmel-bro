@@ -8,10 +8,10 @@ dayjs.extend(weekday);
 dayjs.extend(localeData);
 dayjs.extend(advancedFormat);
 
-export function userSchedule(user: string, week: Dayjs) {
+export function studentSchedule(user: string, week: Dayjs) {
   return api.get("/appointments", {
     params: {
-      user,
+      possibleStudents: user,
       start: week.weekday(0).format("X"),
       end: week.weekday(6).format("X"),
       fields:
@@ -20,8 +20,14 @@ export function userSchedule(user: string, week: Dayjs) {
   });
 }
 
-export function teacherSchedule(teacher: string, week: string) {
-  return api.get("/liveschedule", {
-    params: { teacher, week },
+export function teacherSchedule(user: string, week: Dayjs) {
+  return api.get("/appointments", {
+    params: {
+      user,
+      start: week.weekday(0).format("X"),
+      end: week.weekday(6).format("X"),
+      fields:
+        "start,end,startTimeSlotName,type,teachers,subjects,groups,locations,remark,schedulerRemark,changeDescription,cancelled,teacherChanged,timeChanged,locationChanged,choosableInDepartmentCodes",
+    },
   });
 }

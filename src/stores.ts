@@ -13,7 +13,7 @@ dayjs.extend(weekday);
 export const week = writable(0);
 export const currentWeek = writable<Dayjs>(dayjs());
 export const appointments = writable([]);
-export const selectedStudent = writable<
+export const selectedUser = writable<
   Record<string, unknown> & { code: string }
 >({ code: "~me" });
-export const selectedDay = writable<Dayjs>(dayjs());
+export const selectedDay = writable<Dayjs>(dayjs().subtract(1, "day"));

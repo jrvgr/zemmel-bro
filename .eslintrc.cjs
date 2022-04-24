@@ -9,9 +9,14 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "prettier", "svelte3"],
+  overrides: [
+    {
+      files: ["*.svelte"],
+      processor: "svelte3/svelte3",
+    },
+  ],
   rules: {
-    "no-console": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",

@@ -1,15 +1,23 @@
 <script lang="ts">
-  import dayjs from "dayjs";
+  import dayjs, { Dayjs } from "dayjs";
 
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { slide } from "svelte/transition";
   import { appointments, selectedDay } from "@/stores";
   import Appointment from "@/components/Appointment.svelte";
   import CalendarInfo from "@/components/CalenderInfo.svelte";
-  import { checkAppointmentsToday } from "@/components/GetAppointments";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
 
   dayjs.extend(advancedFormat);
+
+  function areDaysSame(
+    appointments: Array<Record<string, unknown> & { start: number }>,
+    selectedDay: Dayjs
+  ) {
+    return appointments.some(
+      (element) => dayjs(element.start * 1000).day() - 1 === selectedDay.day()
+    );
+  }
 </script>
 
 <main>
@@ -25,11 +33,17 @@
           >
             <div class="left">
               <div class="top">
-                <Appointment {appointment} fieldname="subjects" />
+                {#if appointment.subjects.length > 0}
+                  <Appointment {appointment} fieldname="subjects" />
+                {/if}
               </div>
               <div class="bottom">
-                <Appointment {appointment} fieldname="locations" />
-                <Appointment {appointment} fieldname="teachers" />
+                {#if appointment.locations.length > 0}
+                  <Appointment {appointment} fieldname="locations" />
+                {/if}
+                {#if appointment.teachers.length > 0}
+                  <Appointment {appointment} fieldname="teachers" />
+                {/if}
               </div>
             </div>
             <div class="right">
@@ -51,10 +65,10 @@
           </div>
         {/if}
       {/each}
-      {#key appointments && $selectedDay}
-        {#if !checkAppointmentsToday($appointments, $selectedDay)}
+      {#key $appointments && $selectedDay}
+        {#if !areDaysSame($appointments, $selectedDay)}
           <div class="appointment" in:slide={{ duration: 1000 }}>
-            <p>we found no appointments for today</p>
+            <p>found no appointments for this day</p>
           </div>
         {/if}
       {/key}
