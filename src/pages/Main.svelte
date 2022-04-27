@@ -12,7 +12,7 @@
 
   //animation
   import Transition from "@/components/PageTransition.svelte";
-  import { getAppointments } from "@/components/GetAppointments";
+  import { getAppointments } from "@/components/setAppointments";
   import { setSelectedStudentDefault } from "@/components/users";
   import { appointments, currentWeek, selectedUser } from "@/stores";
   setSelectedStudentDefault();

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { getAppointments } from "@/components/setAppointments";
   import {
     Calendar,
     ChevronLeft,
@@ -6,27 +7,31 @@
     List,
     MoveHorizontal,
     MoveVertical,
+    RefreshCw,
   } from "lucide-svelte";
   import { active } from "tinro";
-  import { currentWeek, week } from "@/stores";
+  import { currentWeek, week, appointments, selectedUser } from "@/stores";
   import { onMount } from "svelte/internal";
   import dayjs from "dayjs";
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { onDestroy } from "svelte/internal";
-  import { getStudents, studentSchoolYears } from "@/api";
   dayjs.extend(advancedFormat);
 
   const increment = (): void => {
     week.update((week) => week + 1);
-  }
+  };
 
   const decrement = (): void => {
     week.update((week) => week - 1);
-  }
+  };
 
   const reset = (): void => {
     week.set(0);
-  }
+  };
+
+  const refresh = (): void => {
+    getAppointments($currentWeek, appointments, $selectedUser);
+  };
 
   let unsubscribe: Function = () => {};
 
@@ -71,6 +76,9 @@
   </button>
   <button class="normal-button" on:click={increment}>
     <ChevronRight />
+  </button>
+  <button class="normal-button" on:click={refresh}>
+    <RefreshCw />
   </button>
   <div class="seperator" />
 

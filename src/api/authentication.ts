@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Cookies from "js-cookie";
 import { router } from "tinro";
 import dayjs from "dayjs";

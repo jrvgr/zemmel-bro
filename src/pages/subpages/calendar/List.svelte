@@ -25,6 +25,48 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
+        {#if Array.isArray(appointment) && dayjs(appointment[0].start * 1000).day() - 1 === $selectedDay.day()}
+          <div class="appointment grouped" in:slide={{ duration: 1000 }}>
+            <div class="left">
+              <div class="top">
+                <div class="subjects">
+                  {#each appointment as appointment}
+                    <Appointment {appointment} fieldname="subjects" />
+                  {/each}
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="locations">
+                  {#each appointment as appointment}
+                    <Appointment {appointment} fieldname="locations" />
+                  {/each}
+                </div>
+                <div class="teachers">
+                  {#each appointment as appointment}
+                    <Appointment {appointment} fieldname="teachers" />
+                  {/each}
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="top">
+                <p>
+                  {dayjs(appointment[0].start * 1000).format("HH:mm")} - {dayjs(
+                    appointment[0].end * 1000
+                  ).format("HH:mm")}
+                </p>
+              </div>
+              <div class="bottom">
+                {#if appointment[0].startTimeSlotName}
+                  <p class="hour">
+                    {appointment[0].startTimeSlotName.replace(/[^0-9]/g, "")}'e
+                    uur
+                  </p>
+                {/if}
+              </div>
+            </div>
+          </div>
+        {/if}
         {#if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
           <div
             class:cancelled={appointment.cancelled}
@@ -38,12 +80,16 @@
                 {/if}
               </div>
               <div class="bottom">
-                {#if appointment.locations.length > 0}
-                  <Appointment {appointment} fieldname="locations" />
-                {/if}
-                {#if appointment.teachers.length > 0}
-                  <Appointment {appointment} fieldname="teachers" />
-                {/if}
+                <div class="locations">
+                  {#if appointment.locations.length > 0}
+                    <Appointment {appointment} fieldname="locations" />
+                  {/if}
+                </div>
+                <div class="teachers">
+                  {#if appointment.teachers.length > 0}
+                    <Appointment {appointment} fieldname="teachers" />
+                  {/if}
+                </div>
               </div>
             </div>
             <div class="right">
@@ -106,6 +152,7 @@
       justify-content: center;
       flex: 1 1 50%;
       flex-wrap: wrap;
+      overflow: visible;
       .top {
         font-size: larger;
         display: flex;
@@ -153,8 +200,77 @@
     }
   }
 
+  .grouped {
+    border-left: var(--accent-gray) solid 5px;
+    position: relative;
+    transition: all 0.5s;
+    transform-origin: right;
+    .left::before {
+      content: "Grouped";
+      display: block;
+      position: absolute;
+      // left: -82.5px;
+      right: calc(100% + 15px);
+      top: 25px;
+      font-size: large;
+      z-index: 10;
+      transition: all 0.25s;
+      transform: scale(0);
+      transform-origin: center;
+    }
+    &:hover {
+      border-left: var(--accent-gray) solid 100px;
+      .left::before {
+        transform: scale(1);
+        transition: all 0.3s;
+      }
+    }
+  }
+
   .cancelled {
-    background-color: #ff7a7a;
+    background-color: var(--accent-red-lighter);
     color: #fff;
+  }
+
+  .teachers {
+    display: flex;
+    gap: 0.5em;
+    padding: 0.3em;
+    border-radius: 5px;
+    background-color: var(--accent-blue);
+    width: max-content;
+    flex-wrap: wrap;
+    :global(p) {
+      color: #fff;
+    }
+    :global(*:not(:last-of-type)::after) {
+      content: ",";
+    }
+  }
+  .locations {
+    display: flex;
+    gap: 0.5em;
+    padding: 0.3em;
+    border-radius: 5px;
+    background-color: var(--accent-red);
+    flex-wrap: wrap;
+    :global(p) {
+      color: #fff;
+    }
+    :global(*:not(:last-of-type)::after) {
+      content: ",";
+    }
+  }
+  .subjects {
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    :global(p) {
+      white-space: pre-wrap;
+    }
+
+    :global(*:not(:last-of-type)::after) {
+      content: ",";
+    }
   }
 </style>
