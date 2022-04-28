@@ -211,7 +211,7 @@
       position: absolute;
       // left: -82.5px;
       right: calc(100% + 15px);
-      top: 25px;
+      top: 37.5%;
       font-size: large;
       z-index: 10;
       transition: all 0.25s;
