@@ -33,7 +33,7 @@ export function getAppointments(
   appointments: Writable<Array<object>>,
   selectedUser: Record<string, unknown> & { code: string }
 ): void {
-  if (selectedUser.employee) {
+  if (selectedUser.isEmployee) {
     teacherSchedule(selectedUser.code, currentWeek).then((data) => {
       appointments.set(
         data.data.response.data.sort((a, b) => a.start - b.start)

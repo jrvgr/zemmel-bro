@@ -39,8 +39,10 @@
    "dependencies": {
       "axios": "^0.26.1",
       "dayjs": "^1.11.0",
+      "fuse.js": "^6.5.3",
       "js-cookie": "^3.0.1",
       "lucide-svelte": "^0.17.15",
+      "svelte-infinite-scroll": "^2.0.1",
       "svelte-popperjs": "^1.2.8",
       "svelte-switch": "^0.0.5",
       "tinro": "^0.6.12"

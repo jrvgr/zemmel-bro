@@ -69,3 +69,18 @@ body.dark {
   color: var(--accent-blue);
   transition: 0.4s all ease;
 }
+
+.normal-button {
+  display: flex;
+  gap: 0.5em;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-background);
+  padding: 0.5rem;
+  width: max-content;
+  height: max-content;
+  border-radius: 0.25em;
+  color: var(--button-foreground);
+}

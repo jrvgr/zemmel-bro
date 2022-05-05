@@ -1,6 +1,9 @@
 <script lang="ts">
   import { GraduationCap, Share2 } from "lucide-svelte";
   import { updateToken } from "@/api";
+  import Cookies from "js-cookie";
+  import dayjs from "dayjs";
+  import { router } from "tinro";
   let school = "";
   let koppelcode = "";
 
@@ -10,6 +13,17 @@
 
   function store(): void {
     koppelcode = koppelcode.replace(/\s/g, "");
+    if (koppelcode.includes("token")) {
+      koppelcode.replace(/token/g, "");
+      localStorage.setItem("school", school);
+      Cookies.set("token", koppelcode, {
+        expires: dayjs().add(1, "year").toDate(),
+        SameSite: "Strict",
+        Secure: true,
+      });
+      router.goto("/main/calendar/list");
+      return;
+    }
     if (koppelcode && school) updateToken(koppelcode, school);
   }
 </script>

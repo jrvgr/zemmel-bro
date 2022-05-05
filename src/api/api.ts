@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 import { router } from "tinro";
 import Cookies from "js-cookie";
 import axios from "axios";

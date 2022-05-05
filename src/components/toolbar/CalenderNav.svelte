@@ -8,9 +8,16 @@
     MoveHorizontal,
     MoveVertical,
     RefreshCw,
+    Search,
   } from "lucide-svelte";
   import { active } from "tinro";
-  import { currentWeek, week, appointments, selectedUser } from "@/stores";
+  import {
+    currentWeek,
+    week,
+    appointments,
+    selectedUser,
+    showScheduleSelector,
+  } from "@/stores";
   import { onMount } from "svelte/internal";
   import dayjs from "dayjs";
   import advancedFormat from "dayjs/plugin/advancedFormat";
@@ -81,6 +88,12 @@
     <RefreshCw />
   </button>
   <div class="seperator" />
+  <button
+    class="normal-button"
+    on:click={() => showScheduleSelector.set(!$showScheduleSelector)}
+  >
+    <Search />
+  </button>
 
   <slot />
 </nav>
@@ -93,20 +106,6 @@
     gap: 0.5rem;
     align-items: center;
     height: min-content;
-  }
-  .normal-button {
-    display: flex;
-    gap: 0.5em;
-    border: none;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--button-background);
-    padding: 0.5rem;
-    width: max-content;
-    height: max-content;
-    border-radius: 0.25em;
-    color: var(--button-foreground);
   }
   .seperator {
     width: 0;
