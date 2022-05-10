@@ -1,23 +1,20 @@
 <script lang="ts">
-  import {
-    selectedUser,
-    showScheduleSelector,
-    showYearSelector,
-    selectedYear,
-  } from "@/stores";
+  import { selectedUser, showYearSelector, selectedYear } from "@/stores";
   import { ChevronDown, Building } from "lucide-svelte";
   import { slide } from "svelte/transition";
-  import Fuse from "fuse.js";
+  import FuzzySearch from "fuzzy-search";
   import { createPopperActions } from "svelte-popperjs";
   import { sameWidth } from "@/components/poppersamewidth";
-  import YearSelector from "./yearSelector.svelte";
+  import YearSelector from "./YearSelector.svelte";
   import {
     allSchoolYears,
     getStudents,
     getTeachers,
     studentSchoolYears,
   } from "@/api";
+  import { onMount } from "svelte";
   import dayjs from "dayjs";
+  import { getUserName } from "../users";
 
   //popper instance for year selector
   const yearOptions = {
@@ -34,49 +31,37 @@
 
   $: data = [...allData];
 
-  // infinite scroll variables
-  let page = 0;
-  let size = 20;
-
-  //fuse stuff
-  $: fuse = new Fuse(data, {
-    keys: ["firstName", "lastName", "prefix"],
-  });
+  //fuzzy stuff
+  $: fuzzy = new FuzzySearch(data, ["firstName", "lastName", "prefix"]);
 
   let scheduleInput;
   let filteredData = [];
 
   $: {
     if (filteredData) {
-      results = filteredData.map((item) => item.item);
+      results = filteredData;
     }
     if (!scheduleInput) {
       results = data;
     }
   }
 
-  async function getyear(e) {
-    if ($selectedYear) {
-      const students = (await getStudents($selectedYear.id)).data.response.data;
-      const teachers = (
-        await getTeachers($selectedYear.id)
-      ).data.response.data.map((teacher) => ({ ...teacher, isEmployee: true }));
-      data = [
-        ...students,
-        ...teachers.map((teacher) => ({ ...teacher, isEmployee: true })),
-      ];
+  async function getPeopleForYear(e) {
+    if (e) {
+      const students = (await getStudents(e.id)).data.response.data;
+      const teachers = (await getTeachers(e.id)).data.response.data.map(
+        (teacher) => ({ ...teacher, isEmployee: true })
+      );
+      data = [...students, ...teachers];
     }
   }
 
-  $: getyear($selectedYear);
+  $: getPeopleForYear($selectedYear);
 
-  $: {
-    if (scheduleInput && $selectedYear) {
-      filteredData = fuse.search(scheduleInput);
-    }
-  }
+  $: if (scheduleInput && $selectedYear)
+    filteredData = fuzzy.search(scheduleInput);
 
-  async function getYears() {
+  onMount(async () => {
     const allYears: Array<Record<string, any> & { id: number }> = (
       await allSchoolYears()
     ).data.response.data;
@@ -89,13 +74,15 @@
       Record<string, any> & { id: number }
     >;
 
-    selectedYear.set(
-      schoolYears.filter(
-        (year) => year.year === dayjs().subtract(1, "y").year()
-      )[0]
-    );
-  }
-  getYears()
+    if (!$selectedYear)
+      selectedYear.set(
+        schoolYears.filter(
+          (year) => year.year === dayjs().subtract(1, "y").year()
+        )[0]
+      );
+  });
+
+  $: console.log(schoolYears);
 </script>
 
 <ul
@@ -132,13 +119,7 @@
       on:click={() => selectedUser.set(result)}
     >
       <span style="white-space: nowrap; text-indent: 0;">
-        {#if result.firstName}
-          {result.firstName}
-        {/if}
-        {#if result.prefix}
-          {result.prefix}
-        {/if}
-        {result.lastName}
+        {getUserName(result)}
       </span>
       {#if result.isEmployee}
         <Building style="height: 1.3em; width: 1.3em" />
@@ -167,5 +148,4 @@
   .rotate {
     transform: rotate(180deg);
   }
-
 </style>

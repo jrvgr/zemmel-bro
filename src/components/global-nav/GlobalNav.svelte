@@ -1,21 +1,21 @@
 <script lang="ts">
-  import UserMenu from "@/components/global-nav/userMenu.svelte";
-  import ScheduleSelector from "@/components/global-nav/scheduleSelector.svelte";
+  import UserMenu from "./UserMenu.svelte";
+  import ScheduleSelector from "./ScheduleSelector.svelte";
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
-  import { getUserName } from "./users";
+  import { getUserName } from "../users";
   import { getUserInfo, logout } from "@/api";
-  import Transition from "./NavTransition.svelte";
+  import Transition from "../NavTransition.svelte";
   import { onMount } from "svelte";
   import { createPopperActions } from "svelte-popperjs";
-  import { sameWidth } from "./poppersamewidth";
+  import { sameWidth } from "../poppersamewidth";
   import { slide } from "svelte/transition";
 
   //import pages
-  import List from "./toolbar/List.svelte";
-  import Horizontal from "./toolbar/Horizontal.svelte";
-  import Vertical from "./toolbar/Vertical.svelte";
-  import People from "./toolbar/People.svelte";
+  import List from "../toolbar/List.svelte";
+  import Horizontal from "../toolbar/Horizontal.svelte";
+  import Vertical from "../toolbar/Vertical.svelte";
+  import People from "../toolbar/People.svelte";
   import { showScheduleSelector } from "@/stores";
 
   let studentname = "";

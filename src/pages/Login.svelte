@@ -14,7 +14,7 @@
   function store(): void {
     koppelcode = koppelcode.replace(/\s/g, "");
     if (koppelcode.includes("token")) {
-      koppelcode.replace(/token/g, "");
+      koppelcode = koppelcode.replace(/token/g, "");
       localStorage.setItem("school", school);
       Cookies.set("token", koppelcode, {
         expires: dayjs().add(1, "year").toDate(),

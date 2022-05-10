@@ -2,7 +2,7 @@
   import { Route } from "tinro";
 
   //navigation
-  import Nav from "@/components/GlobalNav.svelte";
+  import Nav from "@/components/global-nav/GlobalNav.svelte";
 
   //pages
   import List from "@/pages/subpages/calendar/List.svelte";
@@ -17,7 +17,8 @@
   import { appointments, currentWeek, selectedUser } from "@/stores";
   setSelectedStudentDefault();
 
-  $: getAppointments($currentWeek, appointments, $selectedUser);
+  $: if ($selectedUser !== { code: "~me" })
+    getAppointments($currentWeek, appointments, $selectedUser);
 </script>
 
 <Nav />

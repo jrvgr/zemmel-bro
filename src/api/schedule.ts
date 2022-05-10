@@ -8,7 +8,7 @@ dayjs.extend(weekday);
 dayjs.extend(localeData);
 dayjs.extend(advancedFormat);
 
-export function studentSchedule(user: string, week: Dayjs) {
+export function getStudentSchedule(user: string, week: Dayjs) {
   return api.get("/appointments", {
     params: {
       possibleStudents: user,
@@ -21,7 +21,7 @@ export function studentSchedule(user: string, week: Dayjs) {
   });
 }
 
-export function teacherSchedule(user: string, week: Dayjs) {
+export function getTeacherSchedule(user: string, week: Dayjs) {
   return api.get("/appointments", {
     params: {
       user,

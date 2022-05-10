@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import isoWeek from "dayjs/plugin/isoWeek";
 import type { Writable } from "svelte/store";
-import { studentSchedule, teacherSchedule } from "@/api";
+import { getStudentSchedule, getTeacherSchedule } from "@/api";
 
 dayjs.extend(advancedFormat);
 dayjs.extend(isoWeek);
@@ -28,22 +28,24 @@ function merge(array) {
   return array;
 }
 
-export function getAppointments(
+export async function getAppointments(
   currentWeek: Dayjs,
   appointments: Writable<Array<object>>,
   selectedUser: Record<string, unknown> & { code: string }
-): void {
-  if (selectedUser.isEmployee) {
-    teacherSchedule(selectedUser.code, currentWeek).then((data) => {
-      appointments.set(
-        data.data.response.data.sort((a, b) => a.start - b.start)
-      );
-    });
-    return;
+): Promise<void> {
+  async function getScheduleByType(user) {
+    if (user.isEmployee)
+      return (await getTeacherSchedule(user.code, currentWeek)).data.response
+        .data;
+    return (await getStudentSchedule(user.code, currentWeek)).data.response
+      .data;
   }
-  studentSchedule(selectedUser.code, currentWeek).then((data) => {
-    appointments.set(
-      merge(data.data.response.data.sort((a, b) => a.start - b.start))
-    );
-  });
+
+  appointments.set(
+    merge(
+      (await getScheduleByType(selectedUser)).sort((a, b) => a.start - b.start)
+    )
+  );
+
+  return;
 }
