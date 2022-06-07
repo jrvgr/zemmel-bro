@@ -2,6 +2,6 @@
 # Zemmel-Bro
 Zemmel-Bro is een alternatieve website om info van je zermelo rooster te laten zien.
 
-Log gewoon in met je koppelcode en schoolnaam (gevonden in de koppel app pagine op de portal) en je hebt al toegang!
+Log gewoon in met je koppelcode en schoolnaam (gevonden in de koppel app pagina op de portal) en je hebt al toegang!
 
-(de people page is wip en ik ga waarschijnlijk nog een keer de codebase refactoren want het is atm nog een beetje een zooitje in het front-end en time management gedeelte)
+(De people page is wip en ik ga waarschijnlijk nog een keer de codebase refactoren want het is atm nog een beetje een zooitje in het front-end en time management gedeelte)
