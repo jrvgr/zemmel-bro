@@ -44,7 +44,9 @@
       "dayjs": "^1.11.0",
       "fuzzy-search": "^3.2.1",
       "js-cookie": "^3.0.1",
+      "large-small-dynamic-viewport-units-polyfill": "^0.0.4",
       "lucide-svelte": "^0.17.15",
+      "svelte-media-query": "^1.1.2",
       "svelte-popperjs": "^1.2.8",
       "svelte-switch": "^0.0.5",
       "tinro": "^0.6.12"

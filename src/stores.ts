@@ -10,7 +10,7 @@ dayjs.extend(isoWeek);
 dayjs.extend(localeDate);
 dayjs.extend(weekday);
 
-export const week = writable(0);
+export const weekOffset = writable(0);
 export const currentWeek = writable<Dayjs>(dayjs());
 export const appointments = writable([]);
 export const selectedUser = writable<

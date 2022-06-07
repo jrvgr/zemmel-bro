@@ -10,13 +10,11 @@
   import { createPopperActions } from "svelte-popperjs";
   import { sameWidth } from "../poppersamewidth";
   import { slide } from "svelte/transition";
+  import MediaQuery from "svelte-media-query";
 
   //import pages
-  import List from "../toolbar/List.svelte";
-  import Horizontal from "../toolbar/Horizontal.svelte";
-  import Vertical from "../toolbar/Vertical.svelte";
-  import People from "../toolbar/People.svelte";
   import { showScheduleSelector } from "@/stores";
+  import CalenderNav from "../toolbar/CalenderNav.svelte";
 
   let studentname = "";
 
@@ -57,14 +55,15 @@
     <a href="/main/calendar/*" use:active active-class="active"><Calendar /></a>
     <a href="/main/people" use:active active-class="active"><Users /></a>
   </div>
-  <div class="toolbar">
-    <Transition>
-      <Route path="/calendar/list"><List /></Route>
-      <Route path="/calendar/vertical"><Vertical /></Route>
-      <Route path="/calendar/horizontal"><Horizontal /></Route>
-      <Route path="/people"><People /></Route>
-    </Transition>
-  </div>
+  <MediaQuery query="(min-width: 800px)" let:matches>
+    {#if matches}
+      <div class="toolbar">
+        <Transition>
+          <Route path="/calendar/list"><CalenderNav /></Route>
+        </Transition>
+      </div>
+    {/if}
+  </MediaQuery>
 </nav>
 
 {#if showUserMenu}
@@ -158,5 +157,6 @@
     flex-direction: column;
     border-radius: 0.3rem;
     background-color: var(--button-background);
+    min-width: max-content
   }
 </style>

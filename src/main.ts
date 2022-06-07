@@ -6,6 +6,7 @@ import weekday from "dayjs/plugin/weekday";
 import LocaleData from "dayjs/plugin/localeData";
 import "./style.scss";
 import App from "./App.svelte";
+import "large-small-dynamic-viewport-units-polyfill";
 
 dayjs.extend(isoWeek);
 dayjs.extend(advancedFormat);
