@@ -7,6 +7,10 @@
   import Appointment from "@/components/Appointment.svelte";
   import CalendarInfo from "@/components/CalenderInfo.svelte";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
+  import MediaQuery from "svelte-media-query";
+  import Transition from "@/components/NavTransition.svelte";
+  import { Route } from "tinro";
+  import MobileCalenderNav from "@/components/toolbar/MobileCalendarNav.svelte";
 
   dayjs.extend(advancedFormat);
 
@@ -120,13 +124,32 @@
       {/key}
     </div>
   {/key}
+  <div class="toolbar">
+    <MediaQuery query="(max-width: 800px)" let:matches>
+      {#if matches}
+        <Transition>
+          <MobileCalenderNav />
+        </Transition>
+      {/if}
+    </MediaQuery>
+  </div>
 </main>
 
 <style lang="scss">
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
   .appointments {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 100%;
+    flex-grow: 1;
+    @media (max-width: 800px) {
+      margin-bottom: 4.5em;
+    }
   }
   .appointment {
     display: flex;
@@ -272,5 +295,12 @@
     :global(*:not(:last-of-type)::after) {
       content: ",";
     }
+  }
+  .toolbar {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background: var(--header-background);
+    padding: 10px 0;
   }
 </style>

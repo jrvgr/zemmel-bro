@@ -51,6 +51,12 @@
 </script>
 
 <nav>
+  <button
+    class="normal-button"
+    on:click={() => showScheduleSelector.set(!$showScheduleSelector)}
+  >
+    <Search />
+  </button>
   <button class="normal-button" on:click={decrement}>
     <ChevronLeft />
   </button>
@@ -63,13 +69,6 @@
   <button class="normal-button" on:click={refresh}>
     <RefreshCw />
   </button>
-  <div class="seperator" />
-  <button
-    class="normal-button"
-    on:click={() => showScheduleSelector.set(!$showScheduleSelector)}
-  >
-    <Search />
-  </button>
 
   <slot />
 </nav>
@@ -78,17 +77,14 @@
   nav {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 0.2rem;
     align-items: center;
     height: min-content;
+    justify-content: space-evenly;
+    padding: 0 0.4rem;
   }
-  .seperator {
-    width: 0;
-    height: 2rem;
-    border-right: 0.1rem solid var(--popup_item-background);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+  .normal-button {
+    // background-color: var(--header-background);
+    width: 100%;
   }
 </style>

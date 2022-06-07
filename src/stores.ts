@@ -10,10 +10,19 @@ dayjs.extend(isoWeek);
 dayjs.extend(localeDate);
 dayjs.extend(weekday);
 
-export const week = writable(0);
+export const weekOffset = writable(0);
 export const currentWeek = writable<Dayjs>(dayjs());
 export const appointments = writable([]);
 export const selectedUser = writable<
   Record<string, unknown> & { code: string }
->({ code: "~me" });
+>({ code: "~me", isEmployee: true });
 export const selectedDay = writable<Dayjs>(dayjs().subtract(1, "day"));
+
+// global states for global nav
+export const showYearSelector = writable(false);
+export const selectedYear = writable<{
+  year: number;
+  id: number;
+  projectName: string;
+}>();
+export const showScheduleSelector = writable(false);

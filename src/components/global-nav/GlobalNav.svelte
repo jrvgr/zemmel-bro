@@ -1,50 +1,51 @@
 <script lang="ts">
+  import UserMenu from "./UserMenu.svelte";
+  import ScheduleSelector from "./ScheduleSelector.svelte";
   import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
   import { Route, active } from "tinro";
-  import { getUserName } from "./users";
+  import { getUserName } from "../users";
   import { getUserInfo, logout } from "@/api";
-  import Transition from "./NavTransition.svelte";
+  import Transition from "../NavTransition.svelte";
+  import { onMount } from "svelte";
   import { createPopperActions } from "svelte-popperjs";
+  import { sameWidth } from "../poppersamewidth";
   import { slide } from "svelte/transition";
-  import { sameWidth } from "./poppersamewidth";
-  import Switch from "svelte-switch";
-  import { Darkmode } from "@/main";
+  import MediaQuery from "svelte-media-query";
 
   //import pages
-  import List from "./toolbar/List.svelte";
-  import Horizontal from "./toolbar/Horizontal.svelte";
-  import Vertical from "./toolbar/Vertical.svelte";
-  import People from "./toolbar/People.svelte";
-  import { onMount } from "svelte";
+  import { showScheduleSelector } from "@/stores";
+  import CalenderNav from "../toolbar/CalenderNav.svelte";
 
   let studentname = "";
 
-  getUserInfo("~me").then((student) => {
-    studentname = getUserName(student.data.response.data[0]);
+  onMount(async () => {
+    studentname = getUserName((await getUserInfo("~me")).data.response.data[0]);
   });
-
-  const popperOptions = {
-    modifiers: [{ name: "offset", options: { offset: [0, 10] } }, sameWidth],
-  };
-  const [popperRef, popperContent] = createPopperActions(popperOptions);
 
   let showUserMenu = false;
 
-  function toggleUserMenu() {
-    showUserMenu = !showUserMenu;
-  }
+  //initialize popper instances
+  const popperOptions = {
+    modifiers: [{ name: "offset", options: { offset: [0, 10] } }, sameWidth],
+  };
 
-  let checkedValue = false;
+  export const [userRef, userContent] = createPopperActions(popperOptions);
 
-  const dark = localStorage.getItem("dark");
-  if (dark === "true") {
-    checkedValue = true;
-  }
+  const selectorOptions = {
+    modifiers: [{ name: "offset", options: { offset: [0, 5] } }, sameWidth],
+  };
+
+  const [selectorContent] = createPopperActions(selectorOptions);
 </script>
 
 <nav>
   <div class="left">
-    <button use:popperRef on:click={toggleUserMenu} id="reference" class="user">
+    <button
+      use:userRef
+      on:click={() => (showUserMenu = !showUserMenu)}
+      id="reference"
+      class="user"
+    >
       <span class="username">{studentname}</span>
       <div class="chevronDown" class:rotate={showUserMenu}>
         <ChevronDown />
@@ -54,40 +55,30 @@
     <a href="/main/calendar/*" use:active active-class="active"><Calendar /></a>
     <a href="/main/people" use:active active-class="active"><Users /></a>
   </div>
-  <div class="toolbar">
-    <Transition>
-      <Route path="/calendar/list"><List /></Route>
-      <Route path="/calendar/vertical"><Vertical /></Route>
-      <Route path="/calendar/horizontal"><Horizontal /></Route>
-      <Route path="/people"><People /></Route>
-    </Transition>
-  </div>
+  <MediaQuery query="(min-width: 800px)" let:matches>
+    {#if matches}
+      <div class="toolbar">
+        <Transition>
+          <Route path="/calendar/list"><CalenderNav /></Route>
+        </Transition>
+      </div>
+    {/if}
+  </MediaQuery>
 </nav>
 
 {#if showUserMenu}
-  <div id="tooltip popper" transition:slide use:popperContent class="user-menu">
-    <div
-      id="menu-item"
-      on:click={() => (Darkmode(localStorage), (checkedValue = !checkedValue))}
-    >
-      <p>DarkMode</p>
-      <Switch
-        checked={checkedValue}
-        onColor="#1976d2"
-        handleDiameter={14}
-        width={40}
-        height={20}
-        activeBoxShadow="none"
-        boxShadow="none"
-      >
-        <span slot="checkedIcon" />
-        <span slot="unCheckedIcon" />
-      </Switch>
-    </div>
-    <button id="menu-item" on:click={logout}>
-      <p>Log Out</p>
-      <LogOut />
-    </button>
+  <div id="tooltip popper" transition:slide use:userContent class="user-menu">
+    <UserMenu />
+  </div>
+{/if}
+
+{#if $showScheduleSelector}
+  <div
+    use:selectorContent
+    transition:slide
+    style="display: flex;flex-direction: row; background-color: var(--popup_item-background); gap: 0.5em; padding: 0.3em; display: flex; overflow-y: visible;"
+  >
+    <ScheduleSelector />
   </div>
 {/if}
 
@@ -150,31 +141,6 @@
     transform: rotate(180deg);
   }
 
-  .user-menu {
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.3rem;
-    background-color: var(--button-background);
-    #menu-item {
-      border-radius: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      border: none;
-      padding: 0.5rem 0.2rem;
-      color: var(--button-foreground);
-      background-color: transparent;
-      p {
-        margin: 0;
-        font-size: 14px;
-      }
-      &:hover {
-        background-color: var(--popup_item-background);
-      }
-    }
-  }
-
   .seperator {
     width: 0;
     height: 2rem;
@@ -184,5 +150,13 @@
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     margin-left: 0.5rem;
+  }
+
+  .user-menu {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.3rem;
+    background-color: var(--button-background);
+    min-width: max-content
   }
 </style>

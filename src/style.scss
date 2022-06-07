@@ -19,7 +19,9 @@
 }
 
 #app {
-  height: 100%;
+  height: 100vh; /* For browsers that don't support CSS variables */
+  height: calc(var(--1svh, 1vh) * 100); /* This is the "polyfill" */
+  height: 100svh; /* This is for future browsers that support svh, dvh and lvh viewport units */
 }
 
 body {
@@ -68,4 +70,19 @@ body.dark {
 .normal-button:hover svg {
   color: var(--accent-blue);
   transition: 0.4s all ease;
+}
+
+.normal-button {
+  display: flex;
+  gap: 0.5em;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-background);
+  padding: 0.5rem;
+  width: max-content;
+  height: max-content;
+  border-radius: 0.25em;
+  color: var(--button-foreground);
 }
