@@ -1,13 +1,6 @@
 <script lang="ts">
   import { selectedDay } from "@/stores";
   import dayjs from "dayjs";
-  import { onDestroy } from "svelte/internal";
-
-  let unsubscribe: Function = () => {};
-
-  onDestroy(() => {
-    unsubscribe();
-  });
 
   let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 </script>
