@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { showScheduleSelector } from "@/components/global-nav/stores";
   import { getAppointments } from "@/components/setAppointments";
   import {
     Calendar,
@@ -7,13 +8,11 @@
     RefreshCw,
     Search,
   } from "lucide-svelte";
-  import { active } from "tinro";
   import {
     currentWeek,
     weekOffset,
     appointments,
     selectedUser,
-    showScheduleSelector,
   } from "@/stores";
   import { onMount } from "svelte/internal";
   import dayjs from "dayjs";

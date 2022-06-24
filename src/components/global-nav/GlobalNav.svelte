@@ -1,10 +1,10 @@
 <script lang="ts">
   import UserMenu from "./UserMenu.svelte";
   import ScheduleSelector from "./ScheduleSelector.svelte";
-  import { ChevronDown, Calendar, Users, LogOut } from "lucide-svelte";
+  import { ChevronDown, Calendar, Users } from "lucide-svelte";
   import { Route, active } from "tinro";
   import { getUserName } from "../users";
-  import { getUserInfo, logout } from "@/api";
+  import { getUserInfo } from "@/api";
   import Transition from "../NavTransition.svelte";
   import { onMount } from "svelte";
   import { createPopperActions } from "svelte-popperjs";
@@ -13,7 +13,7 @@
   import MediaQuery from "svelte-media-query";
 
   //import pages
-  import { showScheduleSelector } from "@/stores";
+  import { showScheduleSelector } from "./stores";
   import CalenderNav from "../toolbar/CalenderNav.svelte";
 
   let studentname = "";
@@ -55,7 +55,7 @@
     <a href="/main/calendar/*" use:active active-class="active"><Calendar /></a>
     <a href="/main/people" use:active active-class="active"><Users /></a>
   </div>
-  <MediaQuery query="(min-width: 800px)" let:matches>
+  <MediaQuery query="(min-width: 801px)" let:matches>
     {#if matches}
       <div class="toolbar">
         <Transition>

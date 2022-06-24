@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { showYearSelector, selectedYear } from "@/stores";
+  import { showYearSelector, selectedYear } from "./stores";
 
   //data management
   export let schoolYears = [];

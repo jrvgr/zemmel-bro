@@ -9,7 +9,6 @@
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
   import MediaQuery from "svelte-media-query";
   import Transition from "@/components/NavTransition.svelte";
-  import { Route } from "tinro";
   import MobileCalenderNav from "@/components/toolbar/MobileCalendarNav.svelte";
 
   dayjs.extend(advancedFormat);
@@ -21,6 +20,12 @@
     return appointments.some(
       (element) => dayjs(element.start * 1000).day() - 1 === selectedDay.day()
     );
+  }
+
+  function getNumberWithOrdinal(n) {
+    var s = ["th", "st", "nd", "rd"],
+      v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
   }
 </script>
 
@@ -63,8 +68,7 @@
               <div class="bottom">
                 {#if appointment[0].startTimeSlotName}
                   <p class="hour">
-                    {appointment[0].startTimeSlotName.replace(/[^0-9]/g, "")}'e
-                    uur
+                    {getNumberWithOrdinal(appointment[1].startTimeSlotName.replace(/[^0-9]/g, ""))} hour
                   </p>
                 {/if}
               </div>
@@ -107,7 +111,7 @@
               <div class="bottom">
                 {#if appointment.startTimeSlotName}
                   <p class="hour">
-                    {appointment.startTimeSlotName.replace(/[^0-9]/g, "")}'e uur
+                    {getNumberWithOrdinal(appointment.startTimeSlotName.replace(/[^0-9]/g, ""))} hour
                   </p>
                 {/if}
               </div>

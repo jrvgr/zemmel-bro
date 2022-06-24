@@ -13,8 +13,8 @@
     weekOffset,
     appointments,
     selectedUser,
-    showScheduleSelector,
   } from "@/stores";
+  import { showScheduleSelector } from "@/components/global-nav/stores";
   import { onMount } from "svelte/internal";
   import dayjs from "dayjs";
   import advancedFormat from "dayjs/plugin/advancedFormat";

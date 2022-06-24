@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { selectedUser, showYearSelector, selectedYear } from "@/stores";
+  import { showYearSelector, selectedYear } from "./stores";
+  //import this from global stores
+  import { selectedUser } from "@/stores";
   import { ChevronDown, Building } from "lucide-svelte";
   import { slide } from "svelte/transition";
   import FuzzySearch from "fuzzy-search";
@@ -25,11 +27,8 @@
 
   //data management
   let data = [];
-  let allData = [];
   let results = [];
   let schoolYears = [];
-
-  $: data = [...allData];
 
   //fuzzy stuff
   $: fuzzy = new FuzzySearch(data, ["firstName", "lastName", "prefix"]);
@@ -38,18 +37,14 @@
   let filteredData = [];
 
   $: {
-    if (filteredData) {
-      results = filteredData;
-    }
-    if (!scheduleInput) {
-      results = data;
-    }
+    if (filteredData) results = filteredData;
+    if (!scheduleInput) results = data;
   }
 
-  async function getPeopleForYear(e) {
-    if (e) {
-      const students = (await getStudents(e.id)).data.response.data;
-      const teachers = (await getTeachers(e.id)).data.response.data.map(
+  async function getPeopleForYear(year) {
+    if (year) {
+      const students = (await getStudents(year.id)).data.response.data;
+      const teachers = (await getTeachers(year.id)).data.response.data.map(
         (teacher) => ({ ...teacher, isEmployee: true })
       );
       data = [...students, ...teachers];
@@ -81,8 +76,6 @@
         )[0]
       );
   });
-
-  $: console.log(schoolYears);
 </script>
 
 <ul

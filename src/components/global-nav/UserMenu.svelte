@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { createPopperActions } from "svelte-popperjs";
-  import { sameWidth } from "../poppersamewidth";
-  import { slide } from "svelte/transition";
   import Switch from "svelte-switch";
   import { Darkmode } from "@/main";
   import { logout } from "@/api";

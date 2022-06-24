@@ -17,12 +17,3 @@ export const selectedUser = writable<
   Record<string, unknown> & { code: string }
 >({ code: "~me", isEmployee: true });
 export const selectedDay = writable<Dayjs>(dayjs().subtract(1, "day"));
-
-// global states for global nav
-export const showYearSelector = writable(false);
-export const selectedYear = writable<{
-  year: number;
-  id: number;
-  projectName: string;
-}>();
-export const showScheduleSelector = writable(false);
