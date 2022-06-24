@@ -10,9 +10,10 @@
 
   function getWeek(week: number) {
     if (!week) return "This Week";
-    if (week < 0) return "last week"
-    if (week > 0) return "last week"
-    return week > 1 ? `${week} Weeks from now` : `${Math.abs(week)} Weeks ago`;
+    if (week === -1) return "Last Week";
+    if (week === 1) return "Next Week";
+    if (week < 0) return `${Math.abs(week)} weeks ago`;
+    if (week > 0) return `${week} weeks from now`;
   }
 </script>
 
