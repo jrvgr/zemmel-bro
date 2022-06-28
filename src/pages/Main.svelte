@@ -10,13 +10,9 @@
 
   //animation
   import Transition from "@/components/PageTransition.svelte";
-  import { getAppointments } from "@/components/setAppointments";
   import { setSelectedStudentDefault } from "@/components/users";
-  import { appointments, currentWeek, selectedUser } from "@/stores";
   setSelectedStudentDefault();
 
-  $: if ($selectedUser !== { code: "~me" })
-    getAppointments($currentWeek, appointments, $selectedUser);
 </script>
 
 <Nav />

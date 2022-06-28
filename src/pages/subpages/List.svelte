@@ -68,7 +68,9 @@
               <div class="bottom">
                 {#if appointment[0].startTimeSlotName}
                   <p class="hour">
-                    {getNumberWithOrdinal(appointment[1].startTimeSlotName.replace(/[^0-9]/g, ""))} hour
+                    {getNumberWithOrdinal(
+                      appointment[1].startTimeSlotName.replace(/[^0-9]/g, "")
+                    )} hour
                   </p>
                 {/if}
               </div>
@@ -111,7 +113,9 @@
               <div class="bottom">
                 {#if appointment.startTimeSlotName}
                   <p class="hour">
-                    {getNumberWithOrdinal(appointment.startTimeSlotName.replace(/[^0-9]/g, ""))} hour
+                    {getNumberWithOrdinal(
+                      appointment.startTimeSlotName.replace(/[^0-9]/g, "")
+                    )} hour
                   </p>
                 {/if}
               </div>
@@ -128,15 +132,15 @@
       {/key}
     </div>
   {/key}
-  <div class="toolbar">
-    <MediaQuery query="(max-width: 800px)" let:matches>
-      {#if matches}
+  <MediaQuery query="(max-width: 800px)" let:matches>
+    {#if matches}
+      <div class="toolbar">
         <Transition>
           <MobileCalenderNav />
         </Transition>
-      {/if}
-    </MediaQuery>
-  </div>
+      </div>
+    {/if}
+  </MediaQuery>
 </main>
 
 <style lang="scss">
@@ -267,6 +271,7 @@
     background-color: var(--accent-blue);
     width: max-content;
     flex-wrap: wrap;
+    width: auto;
     :global(p) {
       color: #fff;
     }
@@ -304,7 +309,7 @@
     position: fixed;
     bottom: 0;
     width: 100vw;
-    background: var(--header-background);
     padding: 10px 0;
+    background: var(--header-background);
   }
 </style>

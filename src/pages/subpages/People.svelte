@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { selectedUser } from "@/stores";
+  import { selectedUser, currentWeek, appointments } from "@/stores";
   import { showYearSelector } from "./stores";
   import {
     allSchoolYears,
@@ -18,6 +18,7 @@
   import { ChevronDown, Calendar, User } from "lucide-svelte";
   import { getUserName } from "@/components/users";
   import { router } from "tinro";
+import { getAppointments } from "@/components/setAppointments";
 
   //popper instance for year selector
   const yearOptions = {
@@ -67,6 +68,7 @@
   function clickhandler(person) {
     selectedUser.set(person);
     router.goto("/main/calendar");
+    getAppointments($currentWeek, appointments, $selectedUser)
   }
 
   $: console.log(students);

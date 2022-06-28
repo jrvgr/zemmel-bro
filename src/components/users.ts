@@ -1,12 +1,13 @@
+import { get } from "svelte/store";
 import { getUserInfo } from "@/api";
-import { selectedUser } from "@/stores";
+import { appointments, selectedUser, currentWeek } from "@/stores";
+import { getAppointments } from "./setAppointments";
 
 export function getUserName(user: Record<string, any>): string {
   return `${user.firstName || ""} ${user.prefix || ""} ${user.lastName || ""}`;
 }
 
-export function setSelectedStudentDefault(): void {
-  getUserInfo("~me").then((data) => {
-    selectedUser.set(data.data.response.data[0]);
-  });
+export async function setSelectedStudentDefault(): Promise<void> {
+  selectedUser.set((await getUserInfo("~me")).data.response.data[0]);
+  getAppointments(get(currentWeek), appointments, get(selectedUser));
 }

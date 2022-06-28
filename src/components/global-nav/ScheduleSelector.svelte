@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { getAppointments } from "@/components/setAppointments";
   import { showYearSelector, selectedYear } from "./stores";
   //import this from global stores
-  import { selectedUser } from "@/stores";
+  import { selectedUser, currentWeek, appointments } from "@/stores";
   import { ChevronDown, Building } from "lucide-svelte";
   import { slide } from "svelte/transition";
   import FuzzySearch from "fuzzy-search";
@@ -109,7 +110,7 @@
     <button
       class="normal-button result"
       style="display: flex; align-items: center; gap: 0.1em; width: 100%; justify-content: center; width: auto; height: auto; no-wrap; padding: 0 0.3em; "
-      on:click={() => selectedUser.set(result)}
+      on:click={() => {selectedUser.set(result),  getAppointments($currentWeek, appointments, $selectedUser)}}
     >
       <span style="white-space: nowrap; text-indent: 0;">
         {getUserName(result)}
