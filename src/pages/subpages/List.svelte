@@ -1,7 +1,6 @@
 <script lang="ts">
   import dayjs, { Dayjs } from "dayjs";
   import AppointmentRow from "@/components/list-items/index.svelte";
-
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { slide } from "svelte/transition";
   import { appointments, selectedDay } from "@/stores";
