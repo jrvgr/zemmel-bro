@@ -2,14 +2,16 @@
   import Times from "./times.svelte";
   import TimeSlot from "./timeSlot.svelte";
   export let appointment;
+
+  export let grouped = false
 </script>
 
 <div class="right">
   <div class="top">
-    <Times {appointment} />
+    <Times {appointment} {grouped} />
   </div>
   <div class="bottom">
-    <TimeSlot {appointment} />
+    <TimeSlot {appointment}/>
   </div>
 </div>
 

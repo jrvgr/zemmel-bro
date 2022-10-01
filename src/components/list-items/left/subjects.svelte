@@ -1,10 +1,16 @@
 <script lang="ts">
   export let appointment;
   import Appointment from "@/components/Appointment.svelte";
+
+  export let grouped = false;
 </script>
 
 <div class="subjects">
-  {#if appointment.subjects.length > 0}
+  {#if grouped}
+    {#each appointment as appointment}
+      <Appointment {appointment} fieldname="subjects" />
+    {/each}
+  {:else if appointment.subjects.length > 0}
     <Appointment {appointment} fieldname="subjects" />
   {/if}
 </div>

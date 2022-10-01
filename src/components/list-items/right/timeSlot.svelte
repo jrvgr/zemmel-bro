@@ -3,9 +3,15 @@
   export let appointment;
 </script>
 
-{#if appointment[0].startTimeSlotName}
+{#if appointment.startTimeSlotName}
   <p class="hour">
-    {getNumberWithOrdinal(
+    {getNumberWithOrdinal(appointment.startTimeSlotName.replace(/[^0-9]/g, ""))}
+    hour
+  </p>
+{:else if appointment[0].startTimeSlotName}
+  <p class="hour">
+
+        {getNumberWithOrdinal(
       appointment[1].startTimeSlotName.replace(/[^0-9]/g, "")
     )} hour
   </p>

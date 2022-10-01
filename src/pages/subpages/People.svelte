@@ -70,8 +70,6 @@ import { getAppointments } from "@/components/setAppointments";
     router.goto("/main/calendar");
     getAppointments($currentWeek, appointments, $selectedUser)
   }
-
-  $: console.log(students);
 </script>
 
 <header

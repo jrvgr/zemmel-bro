@@ -3,15 +3,17 @@
   import Locations from "./locations.svelte";
   import Subjects from "./subjects.svelte";
   import Teachers from "./teachers.svelte";
+
+  export let grouped = false;
 </script>
 
-<div class="left">
+<div class="left" class:grouped>
   <div class="top">
-    <Subjects {appointment} />
+    <Subjects {appointment} {grouped} />
   </div>
   <div class="bottom">
-    <Locations {appointment} />
-    <Teachers {appointment} />
+    <Locations {appointment} {grouped} />
+    <Teachers {appointment} {grouped} />
   </div>
 </div>
 
@@ -40,7 +42,7 @@
     }
   }
 
-  .left::before {
+  .grouped::before {
     content: "Grouped";
     display: block;
     position: absolute;

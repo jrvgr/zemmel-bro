@@ -3,14 +3,29 @@
   import Right from "./right/index.svelte";
   import Left from "./left/index.svelte";
   import { slide } from "svelte/transition";
+
+  export let grouped = false
 </script>
 
-<div class="appointment" in:slide={{ duration: 1000 }}>
-  <Left {appointment} />
-  <Right {appointment} />
+<div class="appointment" class:grouped in:slide={{ duration: 1000 }}>
+  <Left {appointment} {grouped} />
+  <Right {appointment} {grouped} />
 </div>
 
 <style lang="scss">
+  .grouped {
+    border-left: var(--accent-gray) solid 5px;
+    position: relative;
+    transition: all 0.5s;
+    transform-origin: right;
+    &:hover {
+      border-left: var(--accent-gray) solid 100px;
+      :global(.left::before) {
+        transform: scale(1);
+        transition: all 0.3s;
+      }
+    }
+  }
   .appointment {
     display: flex;
     flex-direction: row;
@@ -28,7 +43,6 @@
     :global(p) {
       margin: 0;
     }
-
     :global(.cancelled) {
       background-color: var(--accent-red-lighter);
       color: #fff;
