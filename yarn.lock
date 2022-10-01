@@ -1532,9 +1532,9 @@ svelte-switch@^0.0.5:
   version "0.0.5"
   resolved "https://registry.npmjs.org/svelte-switch/-/svelte-switch-0.0.5.tgz"
 
-svelte@^3.46.4:
-  version "3.48.0"
-  resolved "https://registry.npmjs.org/svelte/-/svelte-3.48.0.tgz"
+svelte@^3.49.0:
+  version "3.49.0"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.49.0.tgz#5baee3c672306de1070c3b7888fc2204e36a4029"
 
 text-table@^0.2.0:
   version "0.2.0"
