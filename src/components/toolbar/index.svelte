@@ -11,3 +11,13 @@
     </Transition>
   </div>
 {/if}
+
+<style lang="scss">
+  .toolbar {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 10px 0;
+    background: var(--header-background);
+  }
+</style>
