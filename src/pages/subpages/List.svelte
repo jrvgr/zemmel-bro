@@ -1,8 +1,6 @@
 <script lang="ts">
   import dayjs, { Dayjs } from "dayjs";
-  import Ungrouped from "@/components/list-items/ungrouped/index.svelte";
-  import Grouped from "@/components/list-items/grouped/index.svelte";
-
+  import AppointmentRow from "@/components/list-items/index.svelte";
   import advancedFormat from "dayjs/plugin/advancedFormat";
   import { slide } from "svelte/transition";
   import { appointments, selectedDay } from "@/stores";
@@ -36,9 +34,9 @@
     <div class="appointments">
       {#each $appointments as appointment}
           {#if Array.isArray(appointment) && dayjs(appointment[0].start * 1000).day() - 1 === $selectedDay.day()}
-            <Grouped {appointment} />
+            <AppointmentRow {appointment} grouped />
           {:else if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
-            <Ungrouped {appointment} />
+            <AppointmentRow {appointment} />
           {/if}
       {/each}
       {#key $appointments && $selectedDay}
