@@ -8,8 +8,7 @@
   import CalendarInfo from "@/components/CalenderInfo.svelte";
   import WeekDaySelector from "@/components/WeekDaySelector.svelte";
   import MediaQuery from "svelte-media-query";
-  import Toolbar from "@/components/toolbar/index.svelte"
-
+  import Toolbar from "@/components/toolbar/index.svelte";
 
   dayjs.extend(advancedFormat);
 
@@ -21,12 +20,6 @@
       (element) => dayjs(element.start * 1000).day() - 1 === selectedDay.day()
     );
   }
-
-  function getNumberWithOrdinal(n) {
-    const s = ["th", "st", "nd", "rd"],
-      v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-  }
 </script>
 
 <main>
@@ -34,11 +27,11 @@
   {#key $appointments}
     <div class="appointments">
       {#each $appointments as appointment}
-          {#if Array.isArray(appointment) && dayjs(appointment[0].start * 1000).day() - 1 === $selectedDay.day()}
-            <AppointmentRow {appointment} grouped />
-          {:else if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
-            <AppointmentRow {appointment} />
-          {/if}
+        {#if Array.isArray(appointment) && dayjs(appointment[0].start * 1000).day() - 1 === $selectedDay.day()}
+          <AppointmentRow {appointment} grouped />
+        {:else if dayjs(appointment.start * 1000).day() - 1 === $selectedDay.day()}
+          <AppointmentRow {appointment} />
+        {/if}
       {/each}
       {#key $appointments && $selectedDay}
         {#if !areDaysSame($appointments, $selectedDay)}
