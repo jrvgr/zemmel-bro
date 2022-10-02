@@ -15,7 +15,7 @@
   publish = "dist/"
 
   # Default build command.
-  command = "yarn dev"
+  command = "yarn build"
 
 [context.production]
   publish = "dist/"
