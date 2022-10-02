@@ -50,13 +50,31 @@
 </script>
 
 <nav>
-  <button class="normal-button" on:click={decrement}>
+  <button
+    class="normal-button"
+    on:click={() => {
+      decrement();
+      refresh();
+    }}
+  >
     <ChevronLeft />
   </button>
-  <button class="normal-button" on:click={reset}>
+  <button
+    class="normal-button"
+    on:click={() => {
+      reset();
+      refresh();
+    }}
+  >
     <Calendar />
   </button>
-  <button class="normal-button" on:click={increment}>
+  <button
+    class="normal-button"
+    on:click={() => {
+      increment();
+      refresh();
+    }}
+  >
     <ChevronRight />
   </button>
   <button class="normal-button" on:click={refresh}>
